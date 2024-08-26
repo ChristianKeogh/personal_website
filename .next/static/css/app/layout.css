@@ -566,11 +566,32 @@ video {
   --tw-contain-paint:  ;
   --tw-contain-style:  ;
 }
+.relative {
+  position: relative;
+}
+.m-1 {
+  margin: 0.25rem;
+}
+.-ml-\[8px\] {
+  margin-left: -8px;
+}
+.mb-16 {
+  margin-bottom: 4rem;
+}
 .flex {
   display: flex;
 }
 .min-h-screen {
   min-height: 100vh;
+}
+.scroll-pr-6 {
+  scroll-padding-right: 1.5rem;
+}
+.flex-row {
+  flex-direction: row;
+}
+.items-start {
+  align-items: flex-start;
 }
 .items-center {
   align-items: center;
@@ -578,9 +599,35 @@ video {
 .justify-center {
   justify-content: center;
 }
+.space-x-0 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(0px * var(--tw-space-x-reverse));
+  margin-left: calc(0px * calc(1 - var(--tw-space-x-reverse)));
+}
 .bg-black {
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+}
+.px-0 {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+.pb-0 {
+  padding-bottom: 0px;
+}
+.pr-10 {
+  padding-right: 2.5rem;
+}
+.align-middle {
+  vertical-align: middle;
 }
 .text-3xl {
   font-size: 1.875rem;
@@ -589,6 +636,12 @@ video {
 .font-bold {
   font-weight: 700;
 }
+.font-semibold {
+  font-weight: 600;
+}
+.tracking-tight {
+  letter-spacing: -0.025em;
+}
 .text-red-500 {
   --tw-text-opacity: 1;
   color: rgb(239 68 68 / var(--tw-text-opacity));
@@ -596,4 +649,44 @@ video {
 .text-blue-500 {
   --tw-text-opacity: 1;
   color: rgb(59 130 246 / var(--tw-text-opacity));
+}
+.text-gray-500 {
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity));
+}
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.hover\:text-neutral-800:hover {
+  --tw-text-opacity: 1;
+  color: rgb(38 38 38 / var(--tw-text-opacity));
+}
+@media (min-width: 768px) {
+
+  .md\:relative {
+    position: relative;
+  }
+
+  .md\:overflow-auto {
+    overflow: auto;
+  }
+}
+@media (min-width: 1024px) {
+
+  .lg\:sticky {
+    position: sticky;
+  }
+
+  .lg\:top-20 {
+    top: 5rem;
+  }
+}
+@media (prefers-color-scheme: dark) {
+
+  .dark\:hover\:text-neutral-200:hover {
+    --tw-text-opacity: 1;
+    color: rgb(229 229 229 / var(--tw-text-opacity));
+  }
 }
