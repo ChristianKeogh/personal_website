@@ -19,7 +19,7 @@ export function Navbar() {
   return (
       <>
         <nav
-          className="justify-center flex flex-row items-start relative px-0 pb-16 fade md:overflow-auto scroll-pr-6 md:relative"
+          className="justify-center flex flex-row items-start relative px-0 py-8 pb-20 fade md:overflow-auto scroll-pr-6 md:relative"
           id="nav"
         >
           <div className="flex flex-row space-x-20 pr-10">

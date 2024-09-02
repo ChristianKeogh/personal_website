@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Azeret_Mono } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const azer = Azeret_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Christian Keogh"
@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={azer.className}>{children}</body>
     </html>
   );
 }
