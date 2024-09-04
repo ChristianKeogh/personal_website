@@ -7,9 +7,6 @@ const navItems = {
   '/blog': {
     name: 'blog',
   },
-  'https://github.com/ChristianKeogh': {
-    name: 'github',
-  },
   '/other': {
     name: 'other',
   },

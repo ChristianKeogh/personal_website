@@ -1,22 +1,35 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 
-export function ImgLinks() {
+export function ImgLinks({ setSocial }: { setSocial: (value: boolean) => void }) {
   return (
     <div className="flex flex-row justify-center space-x-56 items-start relative px-0">
-        <div className="flex flex-col items-center space-y-12">
+      <a
+        href="/Curriculum_Vitae_2024.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="hover:text-neutral-800 dark:hover:text-neutral-200 flex flex-col items-center space-y-12"
+      >
         <h1>My CV</h1>
-        <img className="w-24"src="/winrep_mag_glass.png" alt="My Projects"/>
-        </div>
-        <div className="flex flex-col items-center space-y-12">
+        <img className="w-24" src="/winrep_mag_glass.png" alt="My CV"/>
+      </a>
+      <a
+        onClick={() => setSocial(true)} 
+        target="_blank"
+        rel="noopener noreferrer"
+        className="hover:text-neutral-800 dark:hover:text-neutral-200 flex flex-col items-center space-y-12"
+      >
         <h1>My Socials</h1>
-        <img className="w-24"src="/user_world-1.png" alt="My Projects"/>
-        </div>
-        <div className="flex flex-col items-center space-y-12">
-        <h1>My Projects</h1>
-        <img className="w-24"src="/accessibility_window_objs.png" alt="My Projects"/>
-        </div>
+        <img className="w-24" src="/user_world-1.png" alt="My Socials"/>
+      </a>
+      <a
+        href="https://github.com/ChristianKeogh" 
+        target="_blank"
+        rel="noopener noreferrer"
+        className="hover:text-neutral-800 dark:hover:text-neutral-200 flex flex-col items-center space-y-12"
+      >
+        <h1>My GitHub</h1>
+        <img className="w-24" src="/accessibility_window_objs.png" alt="My GitHub"/>
+      </a>
     </div>
-  )
+  );
 }
