@@ -1,14 +1,14 @@
 "use client";
-
 import { Navbar } from "./navBar";
 import { NasaPicture } from "./nasaPicture";
 import { ImgLinks } from "./imgLinks";
 import { useState } from "react";
+import SideBar from "./sideBar";
 
 
 export default function Page() {
-    const [social, setSocial] = useState(false);
-
+  const [social, setSocial] = useState<boolean>(false); 
+  
   return (
     <main>
       <div className="flex flex-row max-h-screen">
@@ -23,7 +23,7 @@ export default function Page() {
           <ImgLinks setSocial={setSocial}/>
       </div>
       <div id="right" className="overflow-x-hidden overflow-y-scroll w-[30%]">
-        {social === false ? <NasaPicture /> : <h1>test</h1>
+        {social === false ? <NasaPicture /> : <SideBar/>
         }
       </div>
       </div>
