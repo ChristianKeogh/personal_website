@@ -1,10 +1,27 @@
 import "./globals.css";
+import { NavBarProps } from "./navBar";
+import { useState } from 'react';
 
-interface ImgLinksProps {
-  setSocial: React.Dispatch<React.SetStateAction<boolean>>;  // Explicitly type the function
+export interface ImgLinksProps {
+  setOther: React.Dispatch<React.SetStateAction<boolean>>;
+  setSocial: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function ImgLinks({ setSocial }: ImgLinksProps) {
+export function ImgLinks({ setOther, setSocial }: ImgLinksProps) {
+   const [log, setLog] = useState<boolean>(false);
+
+   const handleSocialClick = () => {
+     if (log) {
+       setOther(false);
+       setSocial(false);
+       setLog(false);
+     } else {
+       setOther(false);
+       setSocial(true);
+       setLog(true);
+     }
+   };
+ 
   return (
     <div className="flex flex-row justify-center space-x-56 items-start relative px-0">
       <a
@@ -17,7 +34,7 @@ export function ImgLinks({ setSocial }: ImgLinksProps) {
         <img className="w-24" src="/winrep_mag_glass.png" alt="My CV" />
       </a>
       <a
-        onClick={() => setSocial(social => !social)}
+        onClick={handleSocialClick}
         style={{ cursor: 'pointer' }} 
         className="hover:text-neutral-800 dark:hover:text-neutral-200 flex flex-col items-center space-y-12"
       >
