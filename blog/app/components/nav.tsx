@@ -1,16 +1,16 @@
-import Link from 'next/link'
+import Link from "next/link";
 
 const navItems = {
-  '/': {
-    name: 'home',
+  "/": {
+    name: "Christian Keogh"
   },
-  '/blog': {
-    name: 'blog',
+  "/about": {
+    name: "about"
   },
-  'https://vercel.com/templates/next.js/portfolio-starter-kit': {
-    name: 'deploy',
-  },
-}
+  "/blog": {
+    name: "blog"
+  }
+};
 
 export function Navbar() {
   return (
@@ -22,19 +22,41 @@ export function Navbar() {
         >
           <div className="flex flex-row space-x-0 pr-10">
             {Object.entries(navItems).map(([path, { name }]) => {
+              const isChristianKeogh = name === "Christian Keogh";
               return (
                 <Link
                   key={path}
                   href={path}
-                  className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1 px-2 m-1"
+                  className={`transition-all flex align-middle relative py-1 px-2 m-1 ${
+                    !isChristianKeogh
+                      ? "text-neutral-400 dark:hover:text-neutral-100"
+                      : ""
+                  }`}
                 >
                   {name}
                 </Link>
-              )
+              );
             })}
+            {/* Links */}
+            <a
+              className="transition-all flex align-middle relative py-1 px-2 m-1 text-neutral-400 dark:hover:text-neutral-100"
+              rel="noopener noreferrer"
+              target="_blank"
+              href="https://github.com/ChristianKeogh"
+            >
+              <p className="h-7">github</p>
+            </a>
+            <a
+              className="transition-all flex align-middle relative py-1 px-2 m-1 text-neutral-400 dark:hover:text-neutral-100"
+              rel="noopener noreferrer"
+              target="_blank"
+              href="https://www.linkedin.com/in/christian-keogh-94888a28b/"
+            >
+              <p className="  h-7">linkedin</p>
+            </a>
           </div>
         </nav>
       </div>
     </aside>
-  )
+  );
 }
