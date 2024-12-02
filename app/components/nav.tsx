@@ -29,7 +29,7 @@ export function Navbar() {
                   href={path}
                   className={`transition-all flex align-middle relative py-1 px-2 m-1 ${
                     !isChristianKeogh
-                      ? "text-neutral-400 dark:hover:text-neutral-100"
+                      ? "text-neutral-400 hover:text-neutral-100"
                       : ""
                   }`}
                 >
@@ -39,7 +39,7 @@ export function Navbar() {
             })}
             {/* Links */}
             <a
-              className="transition-all flex align-middle relative py-1 px-2 m-1 text-neutral-400 dark:hover:text-neutral-100"
+              className="transition-all flex align-middle relative py-1 px-2 m-1 text-neutral-400 hover:text-neutral-100"
               rel="noopener noreferrer"
               target="_blank"
               href="https://github.com/ChristianKeogh"
@@ -47,7 +47,7 @@ export function Navbar() {
               <p className="h-7">github</p>
             </a>
             <a
-              className="transition-all flex align-middle relative py-1 px-2 m-1 text-neutral-400 dark:hover:text-neutral-100"
+              className="transition-all flex align-middle relative py-1 px-2 m-1 text-neutral-400 hover:text-neutral-100"
               rel="noopener noreferrer"
               target="_blank"
               href="https://www.linkedin.com/in/christian-keogh-94888a28b/"
