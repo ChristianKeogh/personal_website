@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const navItems = {
   "/": {
-    name: "Christian Keogh"
+    name: "christian keogh"
   },
   "/about": {
     name: "about"
@@ -22,7 +22,7 @@ export function Navbar() {
         >
           <div className="flex flex-row space-x-0 pr-10">
             {Object.entries(navItems).map(([path, { name }]) => {
-              const isChristianKeogh = name === "Christian Keogh";
+              const isChristianKeogh = name === "christian keogh";
               return (
                 <Link
                   key={path}
