@@ -13,8 +13,7 @@ export default function Page() {
         <br />
         <br />
         In 2023, I undertook a 1-year Hdip in Computer Science, which I used to
-        gain a position as a Frontend developer at Ryanair, working with
-        Angular.
+        gain a position as a Frontend developer at Ryanair.
         <br />
         <br />
         My interests outside tech are History and Politics.
