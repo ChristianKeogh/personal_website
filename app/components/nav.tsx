@@ -25,9 +25,7 @@ const navItems: Record<string, NavItem> = {
   "/other": {
     name: "other",
     dropdownItems: [
-      { name: "Nasa image of the day", path: "/apod" },
-      { name: "test", path: "/test" }
-
+      { name: "Nasa image of the day", path: "/apod" }
       // add more dropdown items here
     ]
   }
@@ -35,6 +33,10 @@ const navItems: Record<string, NavItem> = {
 
 export function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const handleLinkClick = () => {
+    setIsDropdownOpen(false);
+  };
 
   return (
     <aside className="mb-16 tracking-tight">
@@ -59,11 +61,12 @@ export function Navbar() {
                       {item.name}
                     </button>
                     {isDropdownOpen && item.dropdownItems && (
-                      <div className="absolute left-0 mt-0 py-2 bg-black rounded-md shadow-xl z-50 min-w-32">
+                      <div className="absolute left-0 mt-0 bg-black shadow-xl z-50 min-w-32">
                         {item.dropdownItems.map((dropdownItem) => (
                           <Link
                             key={dropdownItem.path}
                             href={dropdownItem.path}
+                            onClick={handleLinkClick}
                             className="block px-4 py-2 text-sm text-neutral-400 hover:text-neutral-100 hover:bg-neutral-800"
                           >
                             {dropdownItem.name}

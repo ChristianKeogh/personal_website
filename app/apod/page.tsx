@@ -22,7 +22,6 @@ export default async function ApodPage() {
         ></iframe>
       )}
       <br />
-
       <p>{apod.explanation}</p>
     </section>
   );
