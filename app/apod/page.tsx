@@ -1,9 +1,13 @@
-export default async function ApodPage() {
+export async function getServerSideProps() {
   const res = await fetch(
     `https://api.nasa.gov/planetary/apod?api_key=${process.env.APOD_KEY}`
   );
   const apod = await res.json();
 
+  return { props: { apod } };
+}
+
+export default function ApodPage({ apod }) {
   return (
     <section className="text-justify">
       <h1>{apod.title}</h1>
