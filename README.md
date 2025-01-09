@@ -1,1 +1,1 @@
-# This is just a simple NextJS website for me to explore
+# This is just a personal website for me to explore
