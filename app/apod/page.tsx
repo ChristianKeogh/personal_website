@@ -1,6 +1,9 @@
+export const dynamic = 'force-dynamic'; // Ensures dynamic rendering
+
 export default async function ApodPage() {
   const res = await fetch(
-    `https://api.nasa.gov/planetary/apod?api_key=${process.env.APOD_KEY}`
+    `https://api.nasa.gov/planetary/apod?api_key=${process.env.APOD_KEY}`,
+    { cache: 'no-store' } // Disable caching
   );
   const apod = await res.json();
 
