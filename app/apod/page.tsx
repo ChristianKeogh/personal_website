@@ -1,5 +1,3 @@
-export const dynamic = "force-dynamic";
-
 export default async function ApodPage() {
   const res = await fetch(
     `https://api.nasa.gov/planetary/apod?api_key=${process.env.APOD_KEY}`,
