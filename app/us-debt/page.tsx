@@ -24,7 +24,7 @@ export default async function useDebt() {
       <h3 className="text-neutral-400">{formattedDate}</h3>
       <br />
       <h1 className="text-5xl">
-        ${formatNumber(debt.data[debt.data.length - 1].tot_pub_debt_out_amt)}{" "}
+        ${formatNumber(debt.data[0].tot_pub_debt_out_amt)}{" "}
       </h1>
     </section>
   );
