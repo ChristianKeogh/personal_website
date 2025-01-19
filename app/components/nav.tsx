@@ -9,7 +9,8 @@ interface DropdownItem {
 
 interface NavItem {
   name: string;
-  dropdownItems?: DropdownItem[];
+  dropdownItemsOther?: DropdownItem[];
+  dropdownItemsSites?: DropdownItem[];
 }
 
 const navItems: Record<string, NavItem> = {
@@ -22,21 +23,30 @@ const navItems: Record<string, NavItem> = {
   "/blog": {
     name: "blog"
   },
+  "/sites": {
+    name: "websites",
+    dropdownItemsSites: [
+      {
+        name: "First Website",
+        path: "https://first-website-j1zalgdyo-christian-keoghs-projects.vercel.app/"
+      }
+    ]
+  },
   "/other": {
     name: "other",
-    dropdownItems: [
+    dropdownItemsOther: [
       { name: "Nasa image of the day", path: "/apod" },
       { name: "US Debt", path: "/us-debt" }
-      // add more dropdown items here
     ]
   }
 };
 
 export function Navbar() {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDropdownOpenOther, setIsDropdownOpenOther] = useState(false);
+  const [isDropdownOpenSites, setIsDropdownOpenSites] = useState(false);
 
   const handleLinkClick = () => {
-    setIsDropdownOpen(false);
+    setIsDropdownOpenOther(false);
   };
 
   return (
@@ -55,15 +65,44 @@ export function Navbar() {
                   <div
                     key={path}
                     className="relative group ml-0"
-                    onMouseEnter={() => setIsDropdownOpen(true)}
-                    onMouseLeave={() => setIsDropdownOpen(false)}
+                    onMouseEnter={() => setIsDropdownOpenOther(true)}
+                    onMouseLeave={() => setIsDropdownOpenOther(false)}
                   >
                     <button className="transition-all flex align-middle relative py-1 px-2 m-1 text-neutral-400 hover:text-neutral-100">
                       {item.name}
                     </button>
-                    {isDropdownOpen && item.dropdownItems && (
+                    {isDropdownOpenOther && item.dropdownItemsOther && (
                       <div className="absolute left-0 mt-0 bg-black shadow-xl z-50 min-w-32">
-                        {item.dropdownItems.map((dropdownItem) => (
+                        {item.dropdownItemsOther.map((dropdownItem) => (
+                          <Link
+                            key={dropdownItem.path}
+                            href={dropdownItem.path}
+                            onClick={handleLinkClick}
+                            className="block px-4 py-2 text-sm text-neutral-400 hover:text-neutral-100 hover:bg-neutral-800"
+                          >
+                            {dropdownItem.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+
+              if (path === "/sites") {
+                return (
+                  <div
+                    key={path}
+                    className="relative group ml-0"
+                    onMouseEnter={() => setIsDropdownOpenSites(true)}
+                    onMouseLeave={() => setIsDropdownOpenSites(false)}
+                  >
+                    <button className="transition-all flex align-middle relative py-1 px-2 m-1 text-neutral-400 hover:text-neutral-100">
+                      {item.name}
+                    </button>
+                    {isDropdownOpenSites && item.dropdownItemsSites && (
+                      <div className="absolute left-0 mt-0 bg-black shadow-xl z-50 min-w-32">
+                        {item.dropdownItemsSites.map((dropdownItem) => (
                           <Link
                             key={dropdownItem.path}
                             href={dropdownItem.path}
