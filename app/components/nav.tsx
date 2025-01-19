@@ -28,7 +28,7 @@ const navItems: Record<string, NavItem> = {
     dropdownItemsSites: [
       {
         name: "First Website",
-        path: "https://first-website-j1zalgdyo-christian-keoghs-projects.vercel.app/"
+        path: "https://first-website-black-five.vercel.app/"
       }
     ]
   },
