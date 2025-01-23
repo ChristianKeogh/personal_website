@@ -9,7 +9,7 @@ export default function firstWebsite() {
       >
         First website
       </a>
-      <p className="text-neutral-500 text-xl">(made with HTML and CSS)</p>
+      <p className="text-neutral-400 text-xl">(made with HTML and CSS)</p>
       <a />
     </section>
   );

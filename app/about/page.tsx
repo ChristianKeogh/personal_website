@@ -19,9 +19,9 @@ export default function Page() {
       </p>
       <br />
       <div className="flex space-x-4">
-        <p className="text-neutral-500">christianfkeogh@gmail.com</p>
+        <p className="text-neutral-400">christianfkeogh@gmail.com</p>
         <a
-          className="text-neutral-500"
+          className="text-neutral-400"
           rel="noopener noreferrer"
           target="_blank"
           href="/pdfs/Curriculum-Vitae-2025.pdf"
