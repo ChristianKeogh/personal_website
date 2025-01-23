@@ -1,6 +1,6 @@
 "use client";
-import { useState } from "react";
 import Link from "next/link";
+import { useState } from "react";
 
 interface DropdownItem {
   name: string;
@@ -28,7 +28,7 @@ const navItems: Record<string, NavItem> = {
     dropdownItemsSites: [
       {
         name: "First Website",
-        path: "https://first-website-black-five.vercel.app/"
+        path: "/websites/firstWebsite"
       }
     ]
   },
@@ -47,6 +47,7 @@ export function Navbar() {
 
   const handleLinkClick = () => {
     setIsDropdownOpenOther(false);
+    setIsDropdownOpenSites(false);
   };
 
   return (
