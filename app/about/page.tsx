@@ -18,17 +18,7 @@ export default function Page() {
         My interests outside tech are History and Politics.
       </p>
       <br />
-      <div className="flex space-x-4">
-        <p className="text-neutral-400">christianfkeogh@gmail.com</p>
-        <a
-          className="text-neutral-400"
-          rel="noopener noreferrer"
-          target="_blank"
-          href="/pdf/Curriculum-Vitae-2025.pdf"
-        >
-          cv
-        </a>
-      </div>
+      <p className="text-neutral-400">christianfkeogh@gmail.com</p>
     </section>
   );
 }
