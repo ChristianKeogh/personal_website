@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { animate } from "motion";
+import { useEffect, useState } from "react";
 
 const formatNumber = (number: number): string => {
   return new Intl.NumberFormat("en-US", {
@@ -29,7 +29,7 @@ export default function DebtPage() {
       const rawDebt = parseFloat(data.data[0].tot_pub_debt_out_amt);
 
       animate(0, rawDebt, {
-        duration: 6,
+        duration: 2,
         ease: [0, 1, 0.31, 1],
         onUpdate: (latest) => setDebtNumber(latest)
       });
