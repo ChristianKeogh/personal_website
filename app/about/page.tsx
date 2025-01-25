@@ -1,12 +1,14 @@
-export const metadata = {
-  title: "About",
-  description: "About me"
-};
+"use client";
+import { motion } from "framer-motion";
 
 export default function Page() {
   return (
     <section>
-      <p className="text-justify">
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="text-justify"
+      >
         Starting in 2019, I worked 4 years in the Animation industry but for a
         few reasons, decided to make a career change.
         <br />
@@ -16,9 +18,14 @@ export default function Page() {
         <br />
         <br />
         My interests outside tech are History and Politics.
-      </p>
+      </motion.p>
       <br />
-      <div className="flex space-x-4">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+        className="flex space-x-4"
+      >
         <p className="text-neutral-400">christianfkeogh@gmail.com</p>
         <a
           className="text-neutral-400"
@@ -28,7 +35,7 @@ export default function Page() {
         >
           cv
         </a>
-      </div>
+      </motion.div>
     </section>
   );
 }

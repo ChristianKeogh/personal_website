@@ -1,5 +1,4 @@
 "use client";
-
 import { animate } from "motion";
 import { useEffect, useState } from "react";
 
@@ -43,7 +42,7 @@ export default function DebtPage() {
       <h1 className="text-xl">United States Total Debt</h1>
       <h3 className="text-neutral-400">{formattedDate}</h3>
       <br />
-      <h1 className="text-4xl">${formatNumber(debtNumber)} </h1>
+      <h1 className="text-2xl">${formatNumber(debtNumber)} </h1>
     </section>
   );
 }
