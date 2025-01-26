@@ -20,18 +20,22 @@ export default function DebtPage() {
 
   useEffect(() => {
     const fetchDebt = async () => {
-      const res = await fetch(
-        `https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/debt_to_penny?sort=-record_date`,
-        { cache: "no-store" }
-      );
-      const data = await res.json();
-      const rawDebt = parseFloat(data.data[0].tot_pub_debt_out_amt);
+      try {
+        const res = await fetch(
+          `https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/debt_to_penny?sort=-record_date`,
+          { cache: "no-store" }
+        );
+        const data = await res.json();
+        const rawDebt = parseFloat(data.data[0].tot_pub_debt_out_amt);
 
-      animate(0, rawDebt, {
-        duration: 2,
-        ease: [0, 1, 0.31, 1],
-        onUpdate: (latest) => setDebtNumber(latest)
-      });
+        animate(0, rawDebt, {
+          duration: 2,
+          ease: [0, 1, 0.31, 1],
+          onUpdate: (latest) => setDebtNumber(latest)
+        });
+      } catch (error) {
+        console.error("Error fetching debt data:", error);
+      }
     };
 
     fetchDebt();
@@ -40,9 +44,8 @@ export default function DebtPage() {
   return (
     <section className="text-center">
       <h1 className="text-xl">United States Total Debt</h1>
-      <h3 className="text-neutral-400">{formattedDate}</h3>
-      <br />
-      <h1 className="text-2xl">${formatNumber(debtNumber)} </h1>
+      <h3 className="text-neutral-400 mb-2">{formattedDate}</h3>
+      <h1 className="text-2xl mb-20">${formatNumber(debtNumber)}</h1>
     </section>
   );
 }

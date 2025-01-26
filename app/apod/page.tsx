@@ -1,13 +1,28 @@
 export default async function ApodPage() {
-  const res = await fetch(
-    `https://api.nasa.gov/planetary/apod?api_key=${process.env.APOD_KEY}`,
-    { cache: "no-store" }
-  );
-  const apod = await res.json();
+  let apod: any = null;
 
+  try {
+    const res = await fetch(
+      `https://api.nasa.gov/planetary/apod?api_key=${process.env.APOD_KEY}`,
+      { cache: "no-store" }
+    );
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch APOD: ${res.statusText}`);
+    }
+
+    apod = await res.json();
+  } catch (error) {
+    console.error("Error fetching APOD data:", error);
+    return (
+      <section className="text-center">
+        <h1 className="text-2xl">{"Failed to load for whatever reason :("}</h1>
+      </section>
+    );
+  }
   return (
     <section className="text-justify">
-      <h1>{apod.title}</h1>
+      <h1 className="text-2xl font-bold">{apod.title}</h1>
       <p className="text-neutral-400">{apod.date}</p>
       <br />
       {apod.media_type === "image" ? (
