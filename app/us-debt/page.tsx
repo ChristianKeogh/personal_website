@@ -44,8 +44,6 @@ export default function DebtPage() {
     fetchDebt();
   }, []);
 
-  if (debtNumber === 0) return null;
-
   return (
     <div>
       <motion.section
