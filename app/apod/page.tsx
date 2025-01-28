@@ -1,5 +1,7 @@
 import ClientSideApod from "./client-side-apod";
 
+export const dynamic = "force-dynamic";
+
 export default async function ApodPage() {
   let apod: any = null;
 
@@ -16,7 +18,7 @@ export default async function ApodPage() {
     apod = await res.json();
   } catch (error) {
     console.error("Error fetching APOD data:", error);
-    apod = { title: "Error", date: "", explanation: "Failed to load data" }; // Handle failure gracefully
+    apod = { title: "Error", date: "" }; // Handle failure gracefully
   }
 
   return <ClientSideApod apod={apod} />;
