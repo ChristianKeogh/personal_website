@@ -1,6 +1,13 @@
+"use client";
+import { motion } from "framer-motion";
+
 export default function firstWebsite() {
   return (
-    <section className="text-center">
+    <motion.section
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="text-center"
+    >
       <a
         className="text-xl"
         rel="noopener noreferrer"
@@ -11,6 +18,6 @@ export default function firstWebsite() {
       </a>
       <p className="text-neutral-400 text-xl">(made with HTML and CSS)</p>
       <a />
-    </section>
+    </motion.section>
   );
 }

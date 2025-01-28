@@ -18,7 +18,6 @@ export default function Page() {
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
         className="text-neutral-400"
       >
         This website will be in a perpetual state of WIP for the time being.

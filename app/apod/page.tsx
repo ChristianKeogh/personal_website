@@ -1,3 +1,5 @@
+import ClientSideApod from "./client-side-apod";
+
 export default async function ApodPage() {
   let apod: any = null;
 
@@ -14,31 +16,8 @@ export default async function ApodPage() {
     apod = await res.json();
   } catch (error) {
     console.error("Error fetching APOD data:", error);
-    return (
-      <section className="text-center">
-        <h1 className="text-2xl">{"Failed to load for whatever reason :("}</h1>
-      </section>
-    );
+    apod = { title: "Error", date: "", explanation: "Failed to load data" }; // Handle failure gracefully
   }
-  return (
-    <section className="text-justify">
-      <h1 className="text-2xl font-bold">{apod.title}</h1>
-      <p className="text-neutral-400">{apod.date}</p>
-      <br />
-      {apod.media_type === "image" ? (
-        <img src={apod.url} alt={apod.title} style={{ maxWidth: "100%" }} />
-      ) : (
-        <iframe
-          src={apod.url}
-          title={apod.title}
-          width="100%"
-          height="400"
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-        ></iframe>
-      )}
-      <br />
-      <p>{apod.explanation}</p>
-    </section>
-  );
+
+  return <ClientSideApod apod={apod} />;
 }

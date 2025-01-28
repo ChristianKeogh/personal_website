@@ -1,8 +1,9 @@
-import { notFound } from "next/navigation";
+import { getBlogPosts } from "app/blog/utils";
 import { CustomMDX } from "app/components/mdx";
-import { formatDate, getBlogPosts } from "app/blog/utils";
-import { baseUrl } from "app/sitemap";
 import ScrollProgess from "app/components/scroll-progress";
+import { baseUrl } from "app/sitemap";
+import { notFound } from "next/navigation";
+import { formatDate } from "../client-utils";
 
 export async function generateStaticParams() {
   let posts = getBlogPosts();

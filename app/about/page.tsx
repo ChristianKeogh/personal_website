@@ -23,7 +23,6 @@ export default function Page() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
         className="flex space-x-4"
       >
         <p className="text-neutral-400">christianfkeogh@gmail.com</p>

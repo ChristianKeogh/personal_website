@@ -1,3 +1,4 @@
+import { getBlogPosts } from "app/blog/utils";
 import { BlogPosts } from "app/components/posts";
 
 export const metadata = {
@@ -5,10 +6,12 @@ export const metadata = {
   description: "Read my blog."
 };
 
-export default function Page() {
+export default function BlogPage() {
+  const allBlogs = getBlogPosts();
+
   return (
     <section>
-      <BlogPosts />
+      <BlogPosts allBlogs={allBlogs} />
     </section>
   );
 }

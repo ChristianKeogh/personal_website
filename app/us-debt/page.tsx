@@ -1,4 +1,5 @@
 "use client";
+import { motion } from "framer-motion";
 import { animate } from "motion";
 import { useEffect, useState } from "react";
 
@@ -42,10 +43,19 @@ export default function DebtPage() {
   }, []);
 
   return (
-    <section className="text-center">
-      <h1 className="text-xl">United States Total Debt</h1>
-      <h3 className="text-neutral-400 mb-2">{formattedDate}</h3>
-      <h1 className="text-2xl mb-20">${formatNumber(debtNumber)}</h1>
-    </section>
+    <div>
+      {debtNumber > 1 && (
+        <motion.section
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center"
+        >
+          <h1 className="text-xl">United States Total Debt</h1>
+          <h3 className="text-neutral-400 mb-2">{formattedDate}</h3>
+
+          <h1 className="text-2xl mb-20">${formatNumber(debtNumber)}</h1>
+        </motion.section>
+      )}
+    </div>
   );
 }

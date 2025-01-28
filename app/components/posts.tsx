@@ -1,11 +1,11 @@
+"use client";
+import { formatDate } from "app/blog/client-utils";
+import { motion } from "framer-motion";
 import Link from "next/link";
-import { formatDate, getBlogPosts } from "app/blog/utils";
 
-export function BlogPosts() {
-  let allBlogs = getBlogPosts();
-
+export function BlogPosts({ allBlogs }) {
   return (
-    <div>
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       {allBlogs
         .sort((a, b) => {
           if (
@@ -31,6 +31,6 @@ export function BlogPosts() {
             </div>
           </Link>
         ))}
-    </div>
+    </motion.div>
   );
 }
