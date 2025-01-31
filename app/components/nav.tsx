@@ -36,7 +36,8 @@ const navItems: Record<string, NavItem> = {
     name: "other",
     dropdownItemsOther: [
       { name: "Nasa image of the day", path: "/apod" },
-      { name: "US Debt", path: "/us-debt" }
+      { name: "US Debt", path: "/us-debt" },
+      { name: "Snake", path: "/snake" }
     ]
   }
 };

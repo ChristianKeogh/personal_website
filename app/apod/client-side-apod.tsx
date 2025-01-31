@@ -10,7 +10,7 @@ export default function ClientSideApod({ apod }) {
       transition={{ duration: 1 }}
     >
       {apod.title === "Error" ? (
-        <p className="text-neutral-400">Failed to load (?)</p>
+        <p className="text-neutral-400">Failed to load ...?</p>
       ) : (
         <>
           <h1 className="text-2xl font-bold">{apod.title}</h1>

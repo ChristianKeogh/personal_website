@@ -20,6 +20,7 @@ const formattedDate = `${year}-${month}-${day}`;
 
 export default function DebtPage() {
   const [debtNumber, setDebtNumber] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchDebt = async () => {
@@ -34,7 +35,10 @@ export default function DebtPage() {
         animate(0, rawDebt, {
           duration: 2,
           ease: [0, 1, 0.31, 1],
-          onUpdate: (latest) => setDebtNumber(latest)
+          onUpdate: (latest) => {
+            setIsLoading(false);
+            setDebtNumber(latest);
+          }
         });
       } catch (error) {
         console.error("Error fetching debt data:", error);
@@ -46,15 +50,21 @@ export default function DebtPage() {
 
   return (
     <div>
-      <motion.section
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="text-center"
-      >
-        <h1 className="text-xl">United States Total Debt</h1>
-        <h3 className="text-neutral-400 mb-2">{formattedDate}</h3>
-        <h1 className="text-2xl mb-20">${formatNumber(debtNumber)}</h1>
-      </motion.section>
+      {isLoading ? (
+        <div className="flex justify-center items-center">
+          <div className="w-12 h-12 border-4 border-t-transparent border-neutral-500 border-solid rounded-full animate-spin"></div>
+        </div>
+      ) : (
+        <motion.section
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center"
+        >
+          <h1 className="text-xl">United States Total Debt</h1>
+          <h3 className="text-neutral-400 mb-2">{formattedDate}</h3>
+          <h1 className="text-2xl mb-20">${formatNumber(debtNumber)}</h1>
+        </motion.section>
+      )}{" "}
     </div>
   );
 }

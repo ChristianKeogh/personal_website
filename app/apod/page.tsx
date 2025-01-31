@@ -18,7 +18,7 @@ export default async function ApodPage() {
     apod = await res.json();
   } catch (error) {
     console.error("Error fetching APOD data:", error);
-    apod = { title: "Error", date: "" }; // Handle failure gracefully
+    apod = { title: "Error", date: "" };
   }
 
   return <ClientSideApod apod={apod} />;
