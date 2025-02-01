@@ -16,19 +16,14 @@ export class SnakeGameEngine {
   // these two sets how often the re-render is
   private readonly staggerFrame: number;
   private currentFrameCount: number;
-
-  private externalScore: number;
-  private setScore: React.Dispatch<React.SetStateAction<number>>;
-  private setIsGameOver: React.Dispatch<React.SetStateAction<boolean>>;
-
+  private setGameOver: React.Dispatch<React.SetStateAction<boolean>>;
   private internalPlayState: boolean;
-
   snake: Snake;
 
   constructor(
     context: CanvasRenderingContext2D,
     boardSidesLength: number,
-    setIsGameOver: React.Dispatch<React.SetStateAction<boolean>>,
+    setGameOver: React.Dispatch<React.SetStateAction<boolean>>,
     isPlaying: boolean
   ) {
     this.context = context;
@@ -40,13 +35,13 @@ export class SnakeGameEngine {
     };
 
     this.boardSidesLength = boardSidesLength;
-    this.numOfRowsAndCols = 26;
+    this.numOfRowsAndCols = 20;
     this._gameBoard = [];
-    this.setIsGameOver = setIsGameOver;
+    this.setGameOver = setGameOver;
 
     // these 2 properties set how often the re-render is
     this.currentFrameCount = 0;
-    this.staggerFrame = 8;
+    this.staggerFrame = 4;
 
     this.internalPlayState = isPlaying;
   }
@@ -137,13 +132,13 @@ export class SnakeGameEngine {
       row.forEach((cell, colIndex) => {
         switch (cell) {
           case "snake":
-            this.context.fillStyle = "#A2C579";
+            this.context.fillStyle = "white";
             break;
           case "food":
-            this.context.fillStyle = "salmon";
+            this.context.fillStyle = "white";
             break;
           case null:
-            this.context.fillStyle = "white";
+            this.context.fillStyle = "transparent";
             break;
         }
         this.context.fillRect(
@@ -228,12 +223,8 @@ export class SnakeGameEngine {
     } else {
       this.currentFrameCount = 0;
 
-      if (this.externalScore !== this.score) {
-        this.setScore(this.score);
-      }
-
       if (this.isGameOver()) {
-        this.setIsGameOver(true);
+        this.setGameOver(true);
         return;
       }
 

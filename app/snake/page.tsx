@@ -9,7 +9,7 @@ export default function snakePage() {
       animate={{ opacity: 1 }}
       className="text-center"
     >
-      <div className="flex justify-center h-screen">
+      <div className="flex justify-center">
         <div className="border-4 border-white w-60 h-60">
           <ClickToStart />
         </div>

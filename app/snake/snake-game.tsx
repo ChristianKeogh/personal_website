@@ -17,22 +17,34 @@ export default function SnakeGame({
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const context = useRef<CanvasRenderingContext2D | null>(null);
   const snakes = useRef<SnakeGameEngine | null>(null);
-  const canvasSidesLength = 500; // 500px
+
+  // Function to update canvas size based on parent div
+  const updateCanvasSize = () => {
+    const parent = document.getElementById("entire-game");
+
+    if (canvasRef.current && parent) {
+      const newSize = parent.clientWidth; // Get parent's width (assuming it's square)
+      canvasRef.current.width = newSize;
+      canvasRef.current.height = newSize;
+    }
+  };
 
   useEffect(() => {
-    if (canvasRef.current === null) {
-      throw new Error("canvasRef is not used");
+    const parent = document.getElementById("entire-game");
+
+    if (!canvasRef.current || !parent) {
+      throw new Error("Canvas or parent div not found");
     }
 
-    canvasRef.current.width = canvasSidesLength;
-    canvasRef.current.height = canvasSidesLength;
+    updateCanvasSize(); // Initial size setup
+
     context.current = canvasRef.current.getContext("2d");
 
     if (context.current) {
       const ctx = context.current;
       snakes.current = new SnakeGameEngine(
         ctx,
-        canvasSidesLength,
+        canvasRef.current.width, // Use dynamic size
         setGameOver,
         isPlaying
       );
@@ -57,9 +69,7 @@ export default function SnakeGame({
             snakeGame.snake.changeMovement("to left");
             break;
           case "Escape":
-            setIsPlaying((prevIsPlaying) => {
-              return !prevIsPlaying;
-            });
+            setIsPlaying((prevIsPlaying) => !prevIsPlaying);
             break;
           default:
             break;
@@ -67,7 +77,11 @@ export default function SnakeGame({
       };
     }
 
+    // Handle window resize
+    window.addEventListener("resize", updateCanvasSize);
+
     return () => {
+      window.removeEventListener("resize", updateCanvasSize);
       canvasRef.current = null;
       context.current = null;
       snakes.current = null;
@@ -81,7 +95,7 @@ export default function SnakeGame({
   }, [isPlaying]);
 
   return (
-    <div>
+    <div id="entire-game">
       <canvas id="game-canvas" ref={canvasRef}></canvas>
     </div>
   );
