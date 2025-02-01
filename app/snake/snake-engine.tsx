@@ -41,7 +41,7 @@ export class SnakeGameEngine {
 
     // these 2 properties set how often the re-render is
     this.currentFrameCount = 0;
-    this.staggerFrame = 4;
+    this.staggerFrame = 10;
 
     this.internalPlayState = isPlaying;
   }
