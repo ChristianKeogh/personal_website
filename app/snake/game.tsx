@@ -22,9 +22,9 @@ export default function clickToStart() {
       {justStarted && <p className="new-game-hint">Click anywhere to start</p>}
       {!gameOver && !justStarted && (
         <SnakeGame
-        //   isPlaying={isPlaying}
-        //   setIsPlaying={setIsPlaying}
-        //   setGameOver={setGameOver}
+          isPlaying={isPlaying}
+          setIsPlaying={setIsPlaying}
+          setGameOver={setGameOver}
         />
       )}
     </div>
