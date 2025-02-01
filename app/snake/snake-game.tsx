@@ -1,8 +1,6 @@
 import { useEffect, useRef } from "react";
 import { SnakeGameEngine } from "./snake-engine";
 
-import "./SnakeBoardStyles.css";
-
 interface SnakeGame {
   isPlaying: boolean;
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,7 +21,7 @@ export default function SnakeGame({
     const parent = document.getElementById("entire-game");
 
     if (canvasRef.current && parent) {
-      const newSize = parent.clientWidth; // Get parent's width (assuming it's square)
+      const newSize = parent.clientWidth;
       canvasRef.current.width = newSize;
       canvasRef.current.height = newSize;
     }
@@ -36,7 +34,7 @@ export default function SnakeGame({
       throw new Error("Canvas or parent div not found");
     }
 
-    updateCanvasSize(); // Initial size setup
+    updateCanvasSize();
 
     context.current = canvasRef.current.getContext("2d");
 
@@ -44,7 +42,7 @@ export default function SnakeGame({
       const ctx = context.current;
       snakes.current = new SnakeGameEngine(
         ctx,
-        canvasRef.current.width, // Use dynamic size
+        canvasRef.current.width,
         setGameOver,
         isPlaying
       );
