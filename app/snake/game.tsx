@@ -1,11 +1,12 @@
 import { useState } from "react";
+import SnakeGame from "./snake-game";
 
-export default function SnakeGame() {
+export default function clickToStart() {
   const [gameOver, setGameOver] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [justStarted, setJustStarted] = useState(true);
 
-  const startGame = () => {
+  function startGame() {
     if (justStarted) {
       setIsPlaying(true);
       setJustStarted(false);
@@ -14,10 +15,18 @@ export default function SnakeGame() {
     }
 
     !gameOver && setIsPlaying(!isPlaying);
-  };
+  }
+
   return (
     <div id="entire-game" onClick={startGame}>
-      Loading...
+      {justStarted && <p className="new-game-hint">Click anywhere to start</p>}
+      {!gameOver && !justStarted && (
+        <SnakeGame
+        //   isPlaying={isPlaying}
+        //   setIsPlaying={setIsPlaying}
+        //   setGameOver={setGameOver}
+        />
+      )}
     </div>
   );
 }

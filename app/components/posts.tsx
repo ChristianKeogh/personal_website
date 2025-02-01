@@ -3,18 +3,27 @@ import { formatDate } from "app/blog/client-utils";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-export function BlogPosts({ allBlogs }) {
+interface BlogPost {
+  slug: string;
+  metadata: {
+    publishedAt: string;
+    title: string;
+  };
+}
+
+interface BlogPostsProps {
+  allBlogs: BlogPost[];
+}
+
+export function BlogPosts({ allBlogs }: BlogPostsProps) {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       {allBlogs
-        .sort((a, b) => {
-          if (
-            new Date(a.metadata.publishedAt) > new Date(b.metadata.publishedAt)
-          ) {
-            return -1;
-          }
-          return 1;
-        })
+        .sort(
+          (a, b) =>
+            new Date(b.metadata.publishedAt).getTime() -
+            new Date(a.metadata.publishedAt).getTime()
+        )
         .map((post) => (
           <Link
             key={post.slug}

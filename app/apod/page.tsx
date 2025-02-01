@@ -2,8 +2,18 @@ import ClientSideApod from "./client-side-apod";
 
 export const dynamic = "force-dynamic";
 
+export interface APODType {
+  date?: string;
+  explanation?: string;
+  hdurl?: string;
+  media_type?: string;
+  service_version?: string;
+  title: string;
+  url?: string;
+}
+
 export default async function ApodPage() {
-  let apod: any = null;
+  let apod: APODType;
 
   try {
     const res = await fetch(

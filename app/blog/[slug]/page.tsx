@@ -5,6 +5,10 @@ import { baseUrl } from "app/sitemap";
 import { notFound } from "next/navigation";
 import { formatDate } from "../client-utils";
 
+interface metadataInput {
+  params: { slug: Object };
+}
+
 export async function generateStaticParams() {
   let posts = getBlogPosts();
 
@@ -13,7 +17,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export function generateMetadata({ params }) {
+export function generateMetadata({ params }: metadataInput) {
   let post = getBlogPosts().find((post) => post.slug === params.slug);
   if (!post) {
     return;
@@ -53,7 +57,7 @@ export function generateMetadata({ params }) {
   };
 }
 
-export default function Blog({ params }) {
+export default function Blog({ params }: metadataInput) {
   let post = getBlogPosts().find((post) => post.slug === params.slug);
 
   if (!post) {

@@ -1,7 +1,8 @@
 "use client";
 import { motion } from "framer-motion";
+import { APODType } from "./page";
 
-export default function ClientSideApod({ apod }) {
+export default function ClientSideApod({ apod }: { apod: APODType }) {
   return (
     <motion.section
       className="text-justify"

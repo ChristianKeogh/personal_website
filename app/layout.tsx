@@ -1,9 +1,9 @@
-import "./global.css";
-import type { Metadata } from "next";
-import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
-import { Navbar } from "./components/nav";
+import { GeistSans } from "geist/font/sans";
+import type { Metadata } from "next";
 import Footer from "./components/footer";
+import { Navbar } from "./components/nav";
+import "./global.css";
 import { baseUrl } from "./sitemap";
 
 export const metadata: Metadata = {
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   }
 };
 
-const cx = (...classes) => classes.filter(Boolean).join(" ");
+const cx = (...classes: any) => classes.filter(Boolean).join(" ");
 
 export default function RootLayout({
   children

@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import SnakeGame from "./game";
+import ClickToStart from "./game";
 
 export default function snakePage() {
   return (
@@ -11,7 +11,7 @@ export default function snakePage() {
     >
       <div className="flex justify-center h-screen">
         <div className="border-4 border-white w-60 h-60">
-          <SnakeGame />
+          <ClickToStart />
         </div>
       </div>
     </motion.section>
