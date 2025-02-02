@@ -21,7 +21,7 @@ export default function Page() {
         <div className=" text-justify flex-col space-y-10">
           <p>
             I'm a Frontend Developer from Dublin. I use this website to explore
-            frontend things.
+            web dev and other things.
           </p>
           <p className="text-neutral-400">
             This will be in a state of WIP for the time being.
