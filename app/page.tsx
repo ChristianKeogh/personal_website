@@ -23,9 +23,6 @@ export default function Page() {
             I'm a Frontend Developer from Dublin. I use this website to explore
             web dev and other things.
           </p>
-          <p className="text-neutral-400">
-            This will be in a state of WIP for the time being.
-          </p>
         </div>
       </motion.div>
     </section>
