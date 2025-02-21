@@ -83,8 +83,8 @@ export default function Blog({ params }: metadataInput) {
               : `/og?title=${encodeURIComponent(post.metadata.title)}`,
             url: `${baseUrl}/blog/${post.slug}`,
             author: {
-              "@type": "Person",
-              name: "My Portfolio"
+              "@type": "Christian",
+              name: "Christian Keogh"
             }
           })
         }}
