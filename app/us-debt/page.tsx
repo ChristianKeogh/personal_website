@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { animate } from "motion";
 import { useEffect, useState } from "react";
 
-export const dynamic = "force-dynamic";
+const revalidate = 3600;
 
 const formatNumber = (number: number): string => {
   return new Intl.NumberFormat("en-US", {
@@ -26,8 +26,7 @@ export default function DebtPage() {
     const fetchDebt = async () => {
       try {
         const res = await fetch(
-          `https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/debt_to_penny?sort=-record_date`,
-          { cache: "no-store" }
+          `https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/debt_to_penny?sort=-record_date`
         );
         const data = await res.json();
         const rawDebt = parseFloat(data.data[0].tot_pub_debt_out_amt);
