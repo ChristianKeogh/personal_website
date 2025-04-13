@@ -1,7 +1,5 @@
 import ClientSideApod from "./client-side-apod";
 
-const revalidate = 3600
-
 export interface APODType {
   date?: string;
   explanation?: string;
@@ -18,6 +16,7 @@ export default async function ApodPage() {
   try {
     const res = await fetch(
       `https://api.nasa.gov/planetary/apod?api_key=${process.env.APOD_KEY}`,
+      { next: { revalidate: 3600 } }
     );
 
     if (!res.ok) {
