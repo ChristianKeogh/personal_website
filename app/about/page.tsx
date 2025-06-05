@@ -9,15 +9,15 @@ export default function Page() {
         animate={{ opacity: 1 }}
         className="text-justify"
       >
-        Starting in 2019, I worked 4 years in the Animation industry but for a
-        few reasons, decided to make a career change.
+        Hi, I’m Christian. I’m based in Dublin and spent about four years
+        working as an animation designer before switching to web development in
+        2024. I work on frontend, using Angular and React, and still do some
+        design work when it fits.
         <br />
         <br />
-        In 2023, I undertook a 1-year Hdip in Computer Science, which I used to
-        gain a position as a Frontend developer at Ryanair.
-        <br />
-        <br />
-        My interests outside tech are History and Politics.
+        I’ve always been into computers, the internet, and design. One of those
+        nerdy kids who lived online. Outside of tech, I’m interested in history,
+        politics, and a bit of finance.
       </motion.p>
       <br />
       <motion.div
