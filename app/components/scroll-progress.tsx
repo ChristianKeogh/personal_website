@@ -15,7 +15,8 @@ export default function ScrollProgess() {
         right: 0,
         height: 5,
         originX: 0,
-        backgroundColor: "white"
+        backgroundColor: "white",
+        zIndex: 9999
       }}
     />
   );

@@ -31,7 +31,8 @@ export default function SnakeGame({
     const parent = document.getElementById("entire-game");
 
     if (!canvasRef.current || !parent) {
-      throw new Error("Canvas or parent div not found");
+      console.warn("Canvas or parent div not found");
+      return;
     }
 
     updateCanvasSize();
