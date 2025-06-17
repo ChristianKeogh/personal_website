@@ -22,7 +22,7 @@ export default function Skills() {
         {iconPaths.map((src, i) => (
           <div
             key={i}
-            className="w-24 h-24 relative filter grayscale hover:grayscale-0 transition duration-300 ease-in-out cursor-pointer"
+            className="w-24 h-24 relative filter grayscale hover:grayscale-0 transition duration-300 ease-in-out"
           >
             <Image
               src={src}
