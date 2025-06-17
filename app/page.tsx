@@ -54,11 +54,22 @@ export default function Page() {
           <a
             key={section.key}
             href={`#${section.key}`}
-            className={`block w-1 h-1 rounded-full ${
-              active === section.key ? "bg-white scale-125" : "bg-neutral-500"
-            } transition-transform`}
+            className="group flex items-center space-x-2"
           >
-            <span className="sr-only">{section.key}</span>
+            <div
+              className={`w-1 h-1 rounded-full transition-transform ${
+                active === section.key ? "bg-white scale-125" : "bg-neutral-500"
+              }`}
+            />
+            <span
+              className={`text-xs transition-opacity duration-300 ${
+                active === section.key
+                  ? "text-white opacity-100"
+                  : "text-neutral-400 opacity-50"
+              }`}
+            >
+              {section.key}
+            </span>
           </a>
         ))}
       </div>

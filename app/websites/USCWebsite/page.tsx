@@ -14,7 +14,7 @@ export default function firstWebsite() {
         target="_blank"
         href="https://uscongress-swart.vercel.app/"
       >
-        WIP US Congress website
+        US Congress website
       </a>
       <p className="text-neutral-400 text-xl">(made with Next)</p>
       <a />

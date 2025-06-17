@@ -21,13 +21,13 @@ const navItems: Record<string, NavItem> = {
     name: "blog"
   },
   "/other": {
-    name: "other",
+    name: "projects",
     dropdownItemsOther: [
-      { name: "Nasa image of the day", path: "/apod" },
-      { name: "US Debt", path: "/us-debt" },
-      { name: "Snake", path: "/snake" },
+      { name: "USCongress", path: "/websites/USCWebsite" },
       { name: "First Website", path: "/websites/firstWebsite" },
-      { name: "WIP USCongress", path: "/websites/USCWebsite" }
+      { name: "Snake", path: "/snake" },
+      { name: "Nasa image of the day", path: "/apod" },
+      { name: "US Debt", path: "/us-debt" }
     ]
   }
 };

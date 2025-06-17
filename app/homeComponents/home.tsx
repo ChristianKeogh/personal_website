@@ -27,21 +27,9 @@ export default function HomeAbout() {
             React, and still do some design work when it fits.
             <br />
             <br />
-            I’ve always been into computers, the internet, and design. One of
-            those nerdy kids who lived online. Outside of tech, I’m interested
-            in history, politics, and a bit of finance.
+            I’ve always been into computers, the internet, and design. Outside
+            of tech, I’m interested in history, politics, and a bit of finance.
           </p>
-
-          {/* <div className="flex space-x-4 text-neutral-400">
-            <p>christianfkeogh@gmail.com</p>
-            <a
-              rel="noopener noreferrer"
-              target="_blank"
-              href="/pdfs/Curriculum-Vitae-2025.pdf"
-            >
-              cv
-            </a>
-          </div> */}
         </div>
       </motion.div>
     </section>
