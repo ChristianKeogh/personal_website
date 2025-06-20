@@ -15,7 +15,8 @@ export default async function ApodPage() {
 
   try {
     const res = await fetch(
-      `https://api.nasa.gov/planetary/apod?api_key=${process.env.APOD_KEY}`
+      `https://api.nasa.gov/planetary/apod?api_key=${process.env.APOD_KEY}`,
+      { cache: "no-store" }
     );
 
     if (!res.ok) {
