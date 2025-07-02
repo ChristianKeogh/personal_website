@@ -3,8 +3,6 @@ import { motion } from "framer-motion";
 import { animate } from "motion";
 import { useEffect, useState } from "react";
 
-const revalidate = 3600;
-
 const formatNumber = (number: number): string => {
   return new Intl.NumberFormat("en-US", {
     minimumFractionDigits: 2,
