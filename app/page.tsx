@@ -12,6 +12,15 @@ const fadeIn = {
 };
 
 export default function Page() {
+  const [isWide, setIsWide] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsWide(window.innerWidth > 1000);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const sections = [
     { key: "About", component: <Home /> },
     { key: "Skills", component: <Skills /> },
@@ -68,7 +77,7 @@ export default function Page() {
                   : "text-neutral-400 opacity-50"
               }`}
             >
-              {section.key}
+              {isWide ? section.key : null}
             </span>
           </a>
         ))}
