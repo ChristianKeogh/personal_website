@@ -22,9 +22,9 @@ export default function HomeAbout() {
         <div className="flex flex-col space-y-6 text-justify">
           <p>
             Hi, I’m Christian, a professional Frontend Developer in Dublin.
-            Previously spent about four years working as an animation designer
-            before switching to web development in 2024. I work in Angular and
-            React, and still do some design work when it fits.
+            Previously I worked as an animation designer before switching to web
+            development. I work in Angular and React, and still do some design
+            work when it fits.
             <br />
             <br />
             I’ve always been into computers, the internet, and design. Outside
