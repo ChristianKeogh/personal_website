@@ -15,7 +15,7 @@ export default function Page() {
   const [isWide, setIsWide] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => setIsWide(window.innerWidth > 1000);
+    const handleResize = () => setIsWide(window.innerWidth > 768);
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);

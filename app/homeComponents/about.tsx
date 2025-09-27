@@ -9,10 +9,9 @@ export default function About() {
         animate={{ opacity: 1 }}
         className="text-justify"
       >
-        Hi, I’m Christian. I’m based in Dublin and spent about four years
-        working as an animation designer before switching to web development in
-        2024. I work on frontend, using Angular and React, and still do some
-        design work when it fits.
+        Hi, I’m Christian. I’m based in Dublin and formerly an animation
+        designer before switching to web development. I work on frontend, using
+        Angular and React, and still do some design work when it fits.
         <br />
         <br />
         I’ve always been into computers, the internet, and design. One of those
