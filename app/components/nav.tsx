@@ -24,6 +24,7 @@ const navItems: Record<string, NavItem> = {
     name: "projects",
     dropdownItemsOther: [
       { name: "USCongress", path: "/websites/USCWebsite" },
+      { name: "CycleHub", path: "/websites/Cyclehub" },
       { name: "First Website", path: "/websites/firstWebsite" },
       { name: "Snake", path: "/snake" },
       { name: "Nasa image of the day", path: "/apod" },
