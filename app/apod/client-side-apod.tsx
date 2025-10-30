@@ -11,6 +11,7 @@ export default function ClientSideApod({ apod }: { apod: APODType }) {
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
+      (CURRENTLY DOWN DUE TO GOV SHUTDOWN)
       {apod.title === "Error" ? (
         <p className="text-neutral-400">Failed to load ...?</p>
       ) : (
