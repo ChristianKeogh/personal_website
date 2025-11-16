@@ -1,9 +1,9 @@
 "use client";
 export const dynamic = "force-dynamic";
 import { motion } from "framer-motion";
+import { APODType } from "./page";
 
-// export default function ClientSideApod({ apod }: { apod: APODType }) {
-export default function ClientSideApod() {
+export default function ClientSideApod({ apod }: { apod: APODType }) {
   return (
     <motion.section
       className="text-center"
@@ -11,8 +11,7 @@ export default function ClientSideApod() {
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
-      Unavailable due to gov shutdown :(
-      {/* {apod.title === "Error" ? (
+      {apod.title === "Error" ? (
         <p className="text-neutral-400">Failed to load ...?</p>
       ) : (
         <>
@@ -34,7 +33,7 @@ export default function ClientSideApod() {
           <br />
           <p>{apod.explanation}</p>
         </>
-      )} */}
+      )}
     </motion.section>
   );
 }
