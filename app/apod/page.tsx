@@ -16,18 +16,21 @@ export default async function ApodPage() {
   try {
     const res = await fetch(
       `https://api.nasa.gov/planetary/apod?api_key=${process.env.APOD_KEY}`,
-      { cache: "no-store" }
+      {
+        next: { revalidate: 60 * 60 },
+        signal: AbortSignal.timeout(10000)
+      }
     );
 
     if (!res.ok) {
-      throw new Error(`Failed to fetch APOD: ${res.statusText}`);
+      console.log(`Failed to fetch APOD: ${res.statusText}`);
+      apod = { title: "Failed to load" };
+    } else {
+      apod = await res.json();
     }
-
-    apod = await res.json();
-  } catch (error) {
-    console.error("Error fetching APOD data:", error);
-    apod = { title: "Error", date: "" };
+    return <ClientSideApod apod={apod} />;
+  } catch {
+    apod = { title: "Failed to load: Gateway Timeout" };
+    return <ClientSideApod apod={apod} />;
   }
-
-  return <ClientSideApod apod={apod} />;
 }
