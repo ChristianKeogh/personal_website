@@ -28,7 +28,7 @@ const navItems: Record<string, NavItem> = {
       { name: "First Website", path: "/websites/firstWebsite" },
       { name: "Hacker News", path: "/websites/hackerNews" },
       { name: "Snake", path: "/snake" },
-      // { name: "Nasa image of the day", path: "/apod" },
+      { name: "Nasa image of the day", path: "/apod" },
       { name: "US Debt", path: "/us-debt" }
     ]
   }

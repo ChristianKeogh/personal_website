@@ -6,7 +6,7 @@ import { notFound } from "next/navigation";
 import { formatDate } from "../client-utils";
 
 interface metadataInput {
-  params: { slug: Object };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
@@ -17,7 +17,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export function generateMetadata({ params }: metadataInput) {
+export async function generateMetadata(props: metadataInput) {
+  const params = await props.params;
   let post = getBlogPosts().find((post) => post.slug === params.slug);
   if (!post) {
     return;
@@ -57,7 +58,8 @@ export function generateMetadata({ params }: metadataInput) {
   };
 }
 
-export default function Blog({ params }: metadataInput) {
+export default async function Blog(props: metadataInput) {
+  const params = await props.params;
   let post = getBlogPosts().find((post) => post.slug === params.slug);
 
   if (!post) {

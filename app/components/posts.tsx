@@ -8,6 +8,7 @@ interface BlogPost {
   metadata: {
     publishedAt: string;
     title: string;
+    summary: string;
   };
 }
 
@@ -27,15 +28,20 @@ export function BlogPosts({ allBlogs }: BlogPostsProps) {
         .map((post) => (
           <Link
             key={post.slug}
-            className="flex flex-col space-y-1 mb-4"
+            className="flex flex-col space-y-1 mb-8 group"
             href={`/blog/${post.slug}`}
           >
-            <div className="w-full flex flex-col md:flex-row space-x-0 md:space-x-2">
-              <p className="text-neutral-400 w-[100px] tabular-nums">
-                {formatDate(post.metadata.publishedAt, false)}
-              </p>
-              <p className="text-neutral-100 tracking-tight">
-                {post.metadata.title}
+            <div className="w-full flex flex-col">
+              <div className="flex flex-row justify-between items-baseline">
+                <p className="text-neutral-100 tracking-tight font-medium group-hover:text-neutral-300 transition-colors">
+                  {post.metadata.title}
+                </p>
+                <p className="text-neutral-500 text-sm tabular-nums">
+                  {formatDate(post.metadata.publishedAt, false)}
+                </p>
+              </div>
+              <p className="text-neutral-400 text-sm mt-1">
+                {post.metadata.summary}
               </p>
             </div>
           </Link>
