@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="mb-16 mt-20 flex flex-col items-center justify-center space-y-4 text-sm text-neutral-500">
+    <footer className="fixed bottom-0 left-0 right-0 mx-auto w-full max-w-xl px-4 md:px-0 bg-black/80 backdrop-blur-md z-50 pb-4 pt-4 flex flex-col items-center justify-center space-y-2 text-sm text-neutral-500">
       <div className="flex space-x-6">
         <a
           href="https://github.com/ChristianKeogh"

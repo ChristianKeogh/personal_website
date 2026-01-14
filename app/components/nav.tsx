@@ -42,7 +42,7 @@ export function Navbar() {
   };
 
   return (
-    <aside className="z-[9999] sticky top-0 bg-black mb-16 tracking-tight">
+    <aside className="z-[9999] sticky top-0 bg-black/80 backdrop-blur-md mb-16 tracking-tight">
       <nav
         className="flex justify-center items-center relative px-0 pb-0 fade z-[9999]"
         id="nav"
