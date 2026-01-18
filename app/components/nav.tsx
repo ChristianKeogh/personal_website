@@ -17,9 +17,6 @@ const navItems: Record<string, NavItem> = {
   "/": {
     name: "christian keogh"
   },
-  "/art": {
-    name: "art"
-  },
   "/blog": {
     name: "blog"
   },
@@ -27,14 +24,17 @@ const navItems: Record<string, NavItem> = {
     name: "projects / other",
     dropdownItemsOther: [
       { name: "USCongress", path: "/websites/USCWebsite" },
+      { name: "Hacker News", path: "/websites/hackerNews" },
       { name: "CycleHub", path: "/websites/Cyclehub" },
       { name: "First Website", path: "/websites/firstWebsite" },
-      { name: "Hacker News", path: "/websites/hackerNews" },
-      { name: "Snake", path: "/snake" },
       { name: "Nasa image of the day", path: "/apod" },
-      { name: "US Debt", path: "/us-debt" }
+      { name: "US Debt", path: "/us-debt" },
+      { name: "Snake", path: "/snake" }
     ]
   },
+  "/art": {
+    name: "art"
+  }
 };
 
 export function Navbar() {
@@ -58,7 +58,7 @@ export function Navbar() {
               return (
                 <div
                   key={path}
-                  className="relative group ml-0"
+                  className="relative group m-0"
                   onMouseEnter={() => setIsDropdownOpenOther(true)}
                   onMouseLeave={() => setIsDropdownOpenOther(false)}
                 >

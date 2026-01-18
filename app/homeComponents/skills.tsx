@@ -18,7 +18,7 @@ export default function Skills() {
       animate={{ opacity: 1 }}
       className="w-full flex justify-center"
     >
-      <div className="grid grid-cols-4 gap-8">
+      <div className="grid grid-cols-3 gap-8">
         {iconPaths.map((src, i) => (
           <div
             key={i}
