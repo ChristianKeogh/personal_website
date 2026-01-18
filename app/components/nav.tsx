@@ -17,6 +17,9 @@ const navItems: Record<string, NavItem> = {
   "/": {
     name: "christian keogh"
   },
+  "/art": {
+    name: "art"
+  },
   "/blog": {
     name: "blog"
   },
@@ -31,7 +34,7 @@ const navItems: Record<string, NavItem> = {
       { name: "Nasa image of the day", path: "/apod" },
       { name: "US Debt", path: "/us-debt" }
     ]
-  }
+  },
 };
 
 export function Navbar() {
