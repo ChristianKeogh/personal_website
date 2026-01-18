@@ -1,9 +1,9 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useMotionValue } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 type Category = "Production" | "Personal";
 
@@ -23,8 +23,29 @@ const ART_ITEMS: ArtItem[] = [
     url: "https://images-ch.s3.eu-north-1.amazonaws.com/FmMWx0XXkAEFDF-.jpeg", 
     description: "",
   },
-    {
+  {
     id: "2",
+    title: "VikingSkool",
+    category: "Production",
+    url: "https://images-ch.s3.eu-north-1.amazonaws.com/FlZru6zXwAIxPe6.jpeg", 
+    description: "",
+  },
+  {
+    id: "3",
+    title: "VikingSkool",
+    category: "Production",
+    url: "https://images-ch.s3.eu-north-1.amazonaws.com/FlZru61X0AIF-Ou.jpeg", 
+    description: "",
+  },
+    {
+    id: "4",
+    title: "VikingSkool",
+    category: "Production",
+    url: "https://images-ch.s3.eu-north-1.amazonaws.com/FlZru6zXoAA41lM.jpeg", 
+    description: "",
+  },
+  {
+    id: "5",
     title: "VikingSkool",
     category: "Production",
     url: "https://images-ch.s3.eu-north-1.amazonaws.com/FlurrZwWYBgdpCi.jpeg", 
@@ -36,6 +57,9 @@ export default function ArtPage() {
   const [activeCategory, setActiveCategory] = useState<Category | "All">("All");
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [scale, setScale] = useState(1);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const filteredItems = ART_ITEMS.filter((item) =>
     activeCategory === "All" ? true : item.category === activeCategory
@@ -45,18 +69,24 @@ export default function ArtPage() {
     if (selectedIndex === null) return;
     setSelectedIndex((prev) => (prev! + 1) % filteredItems.length);
     setScale(1);
-  }, [selectedIndex, filteredItems.length]);
+    x.set(0);
+    y.set(0);
+  }, [selectedIndex, filteredItems.length, x, y]);
 
   const handlePrev = useCallback(() => {
     if (selectedIndex === null) return;
     setSelectedIndex((prev) => (prev! - 1 + filteredItems.length) % filteredItems.length);
     setScale(1);
-  }, [selectedIndex, filteredItems.length]);
+    x.set(0);
+    y.set(0);
+  }, [selectedIndex, filteredItems.length, x, y]);
 
   const handleClose = useCallback(() => {
     setSelectedIndex(null);
     setScale(1);
-  }, []);
+    x.set(0);
+    y.set(0);
+  }, [x, y]);
 
   const handleWheel = useCallback((e: React.WheelEvent) => {
     if (selectedIndex === null) return;
@@ -64,8 +94,15 @@ export default function ArtPage() {
     const zoomStep = 0.1;
     const newScale = e.deltaY < 0 ? scale + zoomStep : scale - zoomStep;
     // Constrain scale between 1 and 5
-    setScale(Math.min(Math.max(newScale, 1), 5));
-  }, [scale, selectedIndex]);
+    const clampedScale = Math.min(Math.max(newScale, 1), 5);
+    setScale(clampedScale);
+    
+    // Reset position if zooming all the way out
+    if (clampedScale === 1) {
+      x.set(0);
+      y.set(0);
+    }
+  }, [scale, selectedIndex, x, y]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -128,7 +165,7 @@ export default function ArtPage() {
               />
             </div>
             <div className="flex flex-col">
-              <h3 className="font-semibold text-neutral-100">{item.title}</h3>
+              <h3 className="font-semibold text-xs text-neutral-100">{item.title}</h3>
               <p className="text-sm text-neutral-500">{item.description}</p>
             </div>
           </div>
@@ -157,7 +194,10 @@ export default function ArtPage() {
               <X size={32} />
             </button>
 
-            <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
+            <div 
+              ref={containerRef}
+              className="relative w-full h-full flex items-center justify-center overflow-hidden"
+            >
               {filteredItems.length > 1 && scale === 1 && (
                 <>
                   <button
@@ -185,10 +225,10 @@ export default function ArtPage() {
                 className={`relative w-full h-full max-w-5xl max-h-[85vh] flex flex-col items-center gap-4 ${
                   scale > 1 ? "cursor-grab active:cursor-grabbing" : "cursor-default"
                 }`}
-                animate={{ scale }}
+                style={{ x, y, scale }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 drag={scale > 1}
-                dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+                dragConstraints={containerRef}
                 dragElastic={0.1}
                 onClick={(e) => e.stopPropagation()}
               >
@@ -203,7 +243,10 @@ export default function ArtPage() {
                   />
                 </div>
                 {scale === 1 && (
-                  <div className="text-center bg-black/50 px-6 py-4 rounded-xl backdrop-blur-sm pointer-events-none absolute bottom-4">
+                  <div 
+                    className="text-center bg-black/50 px-6 py-4 rounded-xl backdrop-blur-sm pointer-events-none absolute bottom-4"
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <h2 className="text-xl font-bold text-white mb-1">
                       {filteredItems[selectedIndex].title}
                     </h2>
