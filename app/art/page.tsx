@@ -60,6 +60,25 @@ export default function ArtPage() {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [apiResponse, setApiResponse] = useState<any>(null);
+  const [apiError, setApiError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchImages() {
+      try {
+        const response = await fetch("https://60772oqba0.execute-api.eu-north-1.amazonaws.com/get-images-api", {
+          headers: {
+            "x-api-key": process.env.NEXT_PUBLIC_PERSONAL_WEBSITE_IMAGES || ""
+          }
+        });
+        const data = await response.json();
+        setApiResponse(data);
+      } catch (err) {
+        setApiError(err instanceof Error ? err.message : String(err));
+      }
+    }
+    fetchImages();
+  }, []);
 
   const filteredItems = ART_ITEMS.filter((item) =>
     activeCategory === "All" ? true : item.category === activeCategory
@@ -123,6 +142,20 @@ export default function ArtPage() {
       className="py-8"
     >
       <div className="mb-12">
+        {/* Raw API Response for Debugging */}
+        <div className="mb-8 p-4 bg-neutral-900 border border-neutral-800 rounded-lg overflow-auto max-h-60">
+          <h3 className="text-xs font-mono text-neutral-500 mb-2 uppercase tracking-wider">Raw API Response</h3>
+          {apiError ? (
+            <p className="text-red-400 font-mono text-sm">Error: {apiError}</p>
+          ) : apiResponse ? (
+            <pre className="text-xs font-mono text-neutral-300">
+              {JSON.stringify(apiResponse, null, 2)}
+            </pre>
+          ) : (
+            <p className="text-neutral-500 font-mono text-sm animate-pulse">Fetching API response...</p>
+          )}
+        </div>
+
         <p className="text-neutral-400 mb-8">
           A collection of my work, ranging from professional production pieces to personal explorations
         </p>
