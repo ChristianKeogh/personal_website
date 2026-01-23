@@ -63,11 +63,11 @@ export default function ArtPage() {
 
   useEffect(() => {
     async function fetchImages() {
-      console.log(process.env.NEXT_PUBLIC_PERSONAL_WEBSITE_IMAGES);
+      console.log(process.env.PERSONAL_WEBSITE_IMAGES);
       try {
         const response = await fetch("https://60772oqba0.execute-api.eu-north-1.amazonaws.com/get-images-api", {
           headers: {
-            "x-api-key": process.env.NEXT_PUBLIC_PERSONAL_WEBSITE_IMAGES || ""
+            "x-api-key": process.env.PERSONAL_WEBSITE_IMAGES || ""
           }
         });
         const data = await response.json();
