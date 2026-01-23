@@ -1,9 +1,7 @@
 "use client";
 
-import { AnimatePresence, motion, useMotionValue } from "framer-motion";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { motion, useMotionValue } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
 type Category = "Production" | "Personal";
 
@@ -15,43 +13,43 @@ interface ArtItem {
   description: string;
 }
 
-const ART_ITEMS: ArtItem[] = [
-  {
-    id: "1",
-    title: "VikingSkool",
-    category: "Production",
-    url: "https://images-ch.s3.eu-north-1.amazonaws.com/FmMWx0XXkAEFDF-.jpeg", 
-    description: "",
-  },
-  {
-    id: "2",
-    title: "VikingSkool",
-    category: "Production",
-    url: "https://images-ch.s3.eu-north-1.amazonaws.com/FlZru6zXwAIxPe6.jpeg", 
-    description: "",
-  },
-  {
-    id: "3",
-    title: "VikingSkool",
-    category: "Production",
-    url: "https://images-ch.s3.eu-north-1.amazonaws.com/FlZru61X0AIF-Ou.jpeg", 
-    description: "",
-  },
-    {
-    id: "4",
-    title: "VikingSkool",
-    category: "Production",
-    url: "https://images-ch.s3.eu-north-1.amazonaws.com/FlZru6zXoAA41lM.jpeg", 
-    description: "",
-  },
-  {
-    id: "5",
-    title: "VikingSkool",
-    category: "Production",
-    url: "https://images-ch.s3.eu-north-1.amazonaws.com/FlurrZwWYBgdpCi.jpeg", 
-    description: "",
-  }
-];
+// const ART_ITEMS: ArtItem[] = [
+//   {
+//     id: "1",
+//     title: "VikingSkool",
+//     category: "Production",
+//     url: "https://images-ch.s3.eu-north-1.amazonaws.com/FmMWx0XXkAEFDF-.jpeg", 
+//     description: "",
+//   },
+//   {
+//     id: "2",
+//     title: "VikingSkool",
+//     category: "Production",
+//     url: "https://images-ch.s3.eu-north-1.amazonaws.com/FlZru6zXwAIxPe6.jpeg", 
+//     description: "",
+//   },
+//   {
+//     id: "3",
+//     title: "VikingSkool",
+//     category: "Production",
+//     url: "https://images-ch.s3.eu-north-1.amazonaws.com/FlZru61X0AIF-Ou.jpeg", 
+//     description: "",
+//   },
+//     {
+//     id: "4",
+//     title: "VikingSkool",
+//     category: "Production",
+//     url: "https://images-ch.s3.eu-north-1.amazonaws.com/FlZru6zXoAA41lM.jpeg", 
+//     description: "",
+//   },
+//   {
+//     id: "5",
+//     title: "VikingSkool",
+//     category: "Production",
+//     url: "https://images-ch.s3.eu-north-1.amazonaws.com/FlurrZwWYBgdpCi.jpeg", 
+//     description: "",
+//   }
+// ];
 
 export default function ArtPage() {
   const [activeCategory, setActiveCategory] = useState<Category | "All">("All");
@@ -65,6 +63,7 @@ export default function ArtPage() {
 
   useEffect(() => {
     async function fetchImages() {
+      console.log(process.env.NEXT_PUBLIC_PERSONAL_WEBSITE_IMAGES);
       try {
         const response = await fetch("https://60772oqba0.execute-api.eu-north-1.amazonaws.com/get-images-api", {
           headers: {
@@ -80,60 +79,60 @@ export default function ArtPage() {
     fetchImages();
   }, []);
 
-  const filteredItems = ART_ITEMS.filter((item) =>
-    activeCategory === "All" ? true : item.category === activeCategory
-  );
+  // // const filteredItems = ART_ITEMS.filter((item) =>
+  // //   activeCategory === "All" ? true : item.category === activeCategory
+  // // );
 
-  const handleNext = useCallback(() => {
-    if (selectedIndex === null) return;
-    setSelectedIndex((prev) => (prev! + 1) % filteredItems.length);
-    setScale(1);
-    x.set(0);
-    y.set(0);
-  }, [selectedIndex, filteredItems.length, x, y]);
+  // const handleNext = useCallback(() => {
+  //   if (selectedIndex === null) return;
+  //   setSelectedIndex((prev) => (prev! + 1) % filteredItems.length);
+  //   setScale(1);
+  //   x.set(0);
+  //   y.set(0);
+  // }, [selectedIndex, filteredItems.length, x, y]);
 
-  const handlePrev = useCallback(() => {
-    if (selectedIndex === null) return;
-    setSelectedIndex((prev) => (prev! - 1 + filteredItems.length) % filteredItems.length);
-    setScale(1);
-    x.set(0);
-    y.set(0);
-  }, [selectedIndex, filteredItems.length, x, y]);
+  // const handlePrev = useCallback(() => {
+  //   if (selectedIndex === null) return;
+  //   setSelectedIndex((prev) => (prev! - 1 + filteredItems.length) % filteredItems.length);
+  //   setScale(1);
+  //   x.set(0);
+  //   y.set(0);
+  // }, [selectedIndex, filteredItems.length, x, y]);
 
-  const handleClose = useCallback(() => {
-    setSelectedIndex(null);
-    setScale(1);
-    x.set(0);
-    y.set(0);
-  }, [x, y]);
+  // const handleClose = useCallback(() => {
+  //   setSelectedIndex(null);
+  //   setScale(1);
+  //   x.set(0);
+  //   y.set(0);
+  // }, [x, y]);
 
-  const handleWheel = useCallback((e: React.WheelEvent) => {
-    if (selectedIndex === null) return;
-    // Zoom sensitivity
-    const zoomStep = 0.1;
-    const newScale = e.deltaY < 0 ? scale + zoomStep : scale - zoomStep;
-    // Constrain scale between 1 and 5
-    const clampedScale = Math.min(Math.max(newScale, 1), 5);
-    setScale(clampedScale);
+  // const handleWheel = useCallback((e: React.WheelEvent) => {
+  //   if (selectedIndex === null) return;
+  //   // Zoom sensitivity
+  //   const zoomStep = 0.1;
+  //   const newScale = e.deltaY < 0 ? scale + zoomStep : scale - zoomStep;
+  //   // Constrain scale between 1 and 5
+  //   const clampedScale = Math.min(Math.max(newScale, 1), 5);
+  //   setScale(clampedScale);
     
-    // Reset position if zooming all the way out
-    if (clampedScale === 1) {
-      x.set(0);
-      y.set(0);
-    }
-  }, [scale, selectedIndex, x, y]);
+  //   // Reset position if zooming all the way out
+  //   if (clampedScale === 1) {
+  //     x.set(0);
+  //     y.set(0);
+  //   }
+  // }, [scale, selectedIndex, x, y]);
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (selectedIndex === null) return;
-      if (e.key === "ArrowRight") handleNext();
-      if (e.key === "ArrowLeft") handlePrev();
-      if (e.key === "Escape") handleClose();
-    };
+  // useEffect(() => {
+  //   const handleKeyDown = (e: KeyboardEvent) => {
+  //     if (selectedIndex === null) return;
+  //     if (e.key === "ArrowRight") handleNext();
+  //     if (e.key === "ArrowLeft") handlePrev();
+  //     if (e.key === "Escape") handleClose();
+  //   };
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [selectedIndex, handleNext, handlePrev, handleClose]);
+  //   window.addEventListener("keydown", handleKeyDown);
+  //   return () => window.removeEventListener("keydown", handleKeyDown);
+  // }, [selectedIndex, handleNext, handlePrev, handleClose]);
 
   return (
     <motion.div
@@ -157,7 +156,7 @@ export default function ArtPage() {
         </div>
 
         <p className="text-neutral-400 mb-8">
-          A collection of my work, ranging from professional production pieces to personal explorations
+          A collection of my work ranging from professional production pieces to personal explorations
         </p>
 
         <div className="flex gap-4 border-b border-neutral-800 pb-2">
@@ -181,7 +180,7 @@ export default function ArtPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {filteredItems.map((item, index) => (
           <div
             key={item.id}
@@ -210,7 +209,7 @@ export default function ArtPage() {
       )}
 
       {/* Lightbox Overlay */}
-      <AnimatePresence mode="wait">
+      {/* <AnimatePresence mode="wait">
         {selectedIndex !== null && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -300,10 +299,10 @@ export default function ArtPage() {
               <div className="fixed bottom-8 left-1/2 -translate-x-1/2 bg-black/50 px-4 py-2 rounded-full backdrop-blur-sm pointer-events-none text-neutral-400 text-sm font-mono z-[10001]">
                 Zoom: {Math.round(scale * 100)}% (Scroll to adjust, Drag to pan)
               </div>
-            )}
-          </motion.div>
+            )} */}
+          {/* </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
     </motion.div>
   );
 }
