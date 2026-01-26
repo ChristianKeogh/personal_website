@@ -213,14 +213,6 @@ export default function GalleryClient({ initialItems }: GalleryClientProps) {
                     className="text-center bg-black/50 px-6 py-4 rounded-xl backdrop-blur-sm pointer-events-none absolute bottom-4"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    <h2 className="text-xl font-bold text-white mb-1">
-                      {filteredItems[selectedIndex].title}
-                    </h2>
-                    {filteredItems[selectedIndex].description && (
-                      <p className="text-neutral-400">
-                        {filteredItems[selectedIndex].description}
-                      </p>
-                    )}
                     <p className="text-neutral-600 text-sm mt-1 font-mono">
                       {selectedIndex + 1} / {filteredItems.length}
                     </p>
