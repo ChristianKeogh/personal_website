@@ -32,9 +32,9 @@ const navItems: Record<string, NavItem> = {
       { name: "Snake", path: "/snake" }
     ]
   },
-  // "/art": {
-  //   name: "art"
-  // }
+  "/art": {
+    name: "art"
+  }
 };
 
 export function Navbar() {
