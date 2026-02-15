@@ -21,7 +21,9 @@ interface GalleryClientProps {
 }
 
 export default function GalleryClient({ initialItems }: GalleryClientProps) {
-  const [activeCategory, setActiveCategory] = useState<Category | "All">("All");
+  const [activeCategory, setActiveCategory] = useState<Category | "All">(
+    "Production"
+  );
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [scale, setScale] = useState(1);
   const x = useMotionValue(0);
@@ -42,7 +44,9 @@ export default function GalleryClient({ initialItems }: GalleryClientProps) {
 
   const handlePrev = useCallback(() => {
     if (selectedIndex === null) return;
-    setSelectedIndex((prev) => (prev! - 1 + filteredItems.length) % filteredItems.length);
+    setSelectedIndex(
+      (prev) => (prev! - 1 + filteredItems.length) % filteredItems.length
+    );
     setScale(1);
     x.set(0);
     y.set(0);
@@ -55,21 +59,24 @@ export default function GalleryClient({ initialItems }: GalleryClientProps) {
     y.set(0);
   }, [x, y]);
 
-  const handleWheel = useCallback((e: React.WheelEvent) => {
-    if (selectedIndex === null) return;
-    // Zoom sensitivity
-    const zoomStep = 0.1;
-    const newScale = e.deltaY < 0 ? scale + zoomStep : scale - zoomStep;
-    // Constrain scale between 1 and 5
-    const clampedScale = Math.min(Math.max(newScale, 1), 5);
-    setScale(clampedScale);
-    
-    // Reset position if zooming all the way out
-    if (clampedScale === 1) {
-      x.set(0);
-      y.set(0);
-    }
-  }, [scale, selectedIndex, x, y]);
+  const handleWheel = useCallback(
+    (e: React.WheelEvent) => {
+      if (selectedIndex === null) return;
+      // Zoom sensitivity
+      const zoomStep = 0.1;
+      const newScale = e.deltaY < 0 ? scale + zoomStep : scale - zoomStep;
+      // Constrain scale between 1 and 5
+      const clampedScale = Math.min(Math.max(newScale, 1), 5);
+      setScale(clampedScale);
+
+      // Reset position if zooming all the way out
+      if (clampedScale === 1) {
+        x.set(0);
+        y.set(0);
+      }
+    },
+    [scale, selectedIndex, x, y]
+  );
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -84,13 +91,11 @@ export default function GalleryClient({ initialItems }: GalleryClientProps) {
   }, [selectedIndex, handleNext, handlePrev, handleClose]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-    >
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       <div className="mb-12">
         <p className="text-neutral-400 mb-8">
-          A collection of my work ranging from professional production pieces to personal explorations
+          A collection of my work ranging from professional production pieces to
+          personal explorations
         </p>
 
         <div className="flex gap-4 border-b border-neutral-800 pb-2">
@@ -102,7 +107,9 @@ export default function GalleryClient({ initialItems }: GalleryClientProps) {
                 setSelectedIndex(null);
               }}
               className={`pb-2 px-1 text-sm font-medium transition-colors relative ${
-                activeCategory === cat ? "text-white" : "text-neutral-500 hover:text-neutral-300"
+                activeCategory === cat
+                  ? "text-white"
+                  : "text-neutral-500 hover:text-neutral-300"
               }`}
             >
               {cat}
@@ -131,15 +138,19 @@ export default function GalleryClient({ initialItems }: GalleryClientProps) {
               />
             </div>
             <div className="flex flex-col">
-              <h3 className="font-semibold text-xs text-neutral-100 uppercase tracking-wider">{item.folder}</h3>
+              <h3 className="font-semibold text-xs text-neutral-100 uppercase tracking-wider">
+                {item.folder}
+              </h3>
               <p className="text-sm text-neutral-500">{item.description}</p>
             </div>
           </div>
         ))}
       </div>
-      
+
       {filteredItems.length === 0 && (
-        <p className="text-neutral-500 text-center py-20">No items found in this category.</p>
+        <p className="text-neutral-500 text-center py-20">
+          No items found in this category.
+        </p>
       )}
 
       {/* Lightbox Overlay */}
@@ -160,7 +171,7 @@ export default function GalleryClient({ initialItems }: GalleryClientProps) {
               <X size={32} />
             </button>
 
-            <div 
+            <div
               ref={containerRef}
               className="relative w-full h-full flex items-center justify-center overflow-hidden"
             >
@@ -187,9 +198,11 @@ export default function GalleryClient({ initialItems }: GalleryClientProps) {
                 </>
               )}
 
-              <motion.div 
+              <motion.div
                 className={`relative w-full h-full max-w-5xl max-h-[85vh] flex flex-col items-center gap-4 ${
-                  scale > 1 ? "cursor-grab active:cursor-grabbing" : "cursor-default"
+                  scale > 1
+                    ? "cursor-grab active:cursor-grabbing"
+                    : "cursor-default"
                 }`}
                 style={{ x, y, scale }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
@@ -209,7 +222,7 @@ export default function GalleryClient({ initialItems }: GalleryClientProps) {
                   />
                 </div>
                 {scale === 1 && (
-                  <div 
+                  <div
                     className="text-center bg-black/50 px-6 py-4 rounded-xl backdrop-blur-sm pointer-events-none absolute bottom-4"
                     onClick={(e) => e.stopPropagation()}
                   >
@@ -220,7 +233,7 @@ export default function GalleryClient({ initialItems }: GalleryClientProps) {
                 )}
               </motion.div>
             </div>
-            
+
             {scale > 1 && (
               <div className="fixed bottom-8 left-1/2 -translate-x-1/2 bg-black/50 px-4 py-2 rounded-full backdrop-blur-sm pointer-events-none text-neutral-400 text-sm font-mono z-[10001]">
                 Zoom: {Math.round(scale * 100)}% (Scroll to adjust, Drag to pan)
