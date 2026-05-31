@@ -21,7 +21,7 @@ export default function HomeAbout() {
 
         <div className="flex flex-col space-y-6 text-justify">
           <p>
-            Hi, I’m Christian, a professional Frontend Developer in Dublin.
+            Hi, I’m Christian, a professional Frontend Developer in London.
             Previously I worked as an animation designer before switching to web
             development. I work in Angular and React, and still do some design
             work when it fits.

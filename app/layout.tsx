@@ -12,7 +12,8 @@ export const metadata: Metadata = {
     default: "christian keogh",
     template: "%s"
   },
-  description: "Personal website of Christian Keogh, a Frontend Developer based in Dublin.",
+  description:
+    "Personal website of Christian Keogh, a Frontend Developer based in London.",
   openGraph: {
     title: "Christian Keogh - Frontend Developer",
     description: "Personal website and portfolio of Christian Keogh.",
@@ -51,7 +52,7 @@ export default function RootLayout({
       )}
     >
       <body className="antialiased max-w-xl mx-4 mt-8 md:mx-auto min-h-screen flex flex-col">
-        <main className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0 flex-grow pb-32">
+        <main className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0 grow pb-32">
           <Navbar />
           {children}
           {/* TODO: Implement Footer */}
