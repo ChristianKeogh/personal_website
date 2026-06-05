@@ -39,7 +39,6 @@ export class SnakeGameEngine {
     this._gameBoard = [];
     this.setGameOver = setGameOver;
 
-    // these 2 properties set how often the re-render is
     this.currentFrameCount = 0;
     this.staggerFrame = 10;
 
@@ -70,55 +69,32 @@ export class SnakeGameEngine {
     this._gameBoard = newGameBoard;
   }
 
-  private get foodCoordinate() {
-    const foodCoordInSnakeCoords = (foodRow: number, foodCol: number) => {
-      const match = this.snake.bodyCoordinates.find((snakeCoord) => {
-        return snakeCoord.col === foodCol && snakeCoord.row === foodRow;
-      });
+  private foodOverlapsSnake(row: number, col: number) {
+    return this.snake.bodyCoordinates.some(
+      (coord) => coord.col === col && coord.row === row
+    );
+  }
 
-      return match !== undefined;
-    };
-
-    if (this._foodCoordinate.row < 0 || this._foodCoordinate.col < 0) {
-      let randRow = Math.floor(Math.random() * this.numOfRowsAndCols);
-      let randCol = Math.floor(Math.random() * this.numOfRowsAndCols);
-
-      while (foodCoordInSnakeCoords(randRow, randCol)) {
-        randRow = Math.floor(Math.random() * this.numOfRowsAndCols);
-        randCol = Math.floor(Math.random() * this.numOfRowsAndCols);
-      }
-
-      this._foodCoordinate = {
-        row: randRow,
-        col: randCol
-      };
+  private randomFoodCoordinate(): Coordinate {
+    let row = Math.floor(Math.random() * this.numOfRowsAndCols);
+    let col = Math.floor(Math.random() * this.numOfRowsAndCols);
+    while (this.foodOverlapsSnake(row, col)) {
+      row = Math.floor(Math.random() * this.numOfRowsAndCols);
+      col = Math.floor(Math.random() * this.numOfRowsAndCols);
     }
+    return { row, col };
+  }
 
+  private get foodCoordinate() {
+    if (this._foodCoordinate.row < 0 || this._foodCoordinate.col < 0) {
+      this._foodCoordinate = this.randomFoodCoordinate();
+    }
     return this._foodCoordinate;
   }
 
   private set foodCoordinate(newCoord: Coordinate) {
-    const foodCoordInSnakeCoords = (foodRow: number, foodCol: number) => {
-      const match = this.snake.bodyCoordinates.find((snakeCoord) => {
-        return snakeCoord.col === foodCol && snakeCoord.row === foodRow;
-      });
-
-      return match !== undefined;
-    };
-
     if (newCoord.row < 0 || newCoord.col < 0) {
-      let randRow = Math.floor(Math.random() * this.numOfRowsAndCols);
-      let randCol = Math.floor(Math.random() * this.numOfRowsAndCols);
-
-      while (foodCoordInSnakeCoords(randRow, randCol)) {
-        randRow = Math.floor(Math.random() * this.numOfRowsAndCols);
-        randCol = Math.floor(Math.random() * this.numOfRowsAndCols);
-      }
-
-      this._foodCoordinate = {
-        row: randRow,
-        col: randCol
-      };
+      this._foodCoordinate = this.randomFoodCoordinate();
     } else {
       this._foodCoordinate = newCoord;
     }

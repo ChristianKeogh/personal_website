@@ -1,6 +1,6 @@
 import { getBlogPosts } from "app/blog/utils";
 import { CustomMDX } from "app/components/mdx";
-import ScrollProgess from "app/components/scroll-progress";
+import ScrollProgress from "app/components/scroll-progress";
 import { baseUrl } from "app/sitemap";
 import { notFound } from "next/navigation";
 import { formatDate } from "../client-utils";
@@ -68,7 +68,7 @@ export default async function Blog(props: metadataInput) {
 
   return (
     <section>
-      <ScrollProgess />
+      <ScrollProgress />
       <script
         type="application/ld+json"
         suppressHydrationWarning

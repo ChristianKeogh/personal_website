@@ -84,8 +84,6 @@ export default class Snake {
   }
 
   move(foodCoord: Coordinate) {
-    // TODO: Set justAte if has eaten or not
-
     let nextHead: Coordinate = { ...this.headCoordinate };
 
     switch (this.movement) {

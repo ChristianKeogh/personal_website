@@ -23,10 +23,10 @@ const navItems: Record<string, NavItem> = {
   "/other": {
     name: "projects / other",
     dropdownItemsOther: [
-      { name: "USCongress", path: "/websites/USCWebsite" },
-      { name: "Hacker News", path: "/websites/hackerNews" },
-      { name: "CycleHub", path: "/websites/Cyclehub" },
-      { name: "First Website", path: "/websites/firstWebsite" },
+      { name: "USCongress", path: "https://uscongress-swart.vercel.app/" },
+      { name: "Hacker News", path: "https://hacker-news-tawny-one.vercel.app/" },
+      { name: "CycleHub", path: "https://github.com/ChristianKeogh/CycleHub" },
+      { name: "First Website", path: "https://first-website-black-five.vercel.app/" },
       { name: "Nasa image of the day", path: "/apod" },
       { name: "US Debt", path: "/us-debt" },
       { name: "Snake", path: "/snake" }
@@ -67,16 +67,29 @@ export function Navbar() {
                   </button>
                   {isDropdownOpenOther && item.dropdownItemsOther && (
                     <div className="absolute left-0 top-full bg-black shadow-xl z-[9998] min-w-32">
-                      {item.dropdownItemsOther.map((dropdownItem) => (
-                        <Link
-                          key={dropdownItem.path}
-                          href={dropdownItem.path}
-                          onClick={handleLinkClick}
-                          className="block px-4 py-2 text-sm text-neutral-400 hover:text-neutral-100 hover:bg-neutral-800"
-                        >
-                          {dropdownItem.name}
-                        </Link>
-                      ))}
+                      {item.dropdownItemsOther.map((dropdownItem) =>
+                        dropdownItem.path.startsWith("http") ? (
+                          <a
+                            key={dropdownItem.path}
+                            href={dropdownItem.path}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={handleLinkClick}
+                            className="block px-4 py-2 text-sm text-neutral-400 hover:text-neutral-100 hover:bg-neutral-800"
+                          >
+                            {dropdownItem.name}
+                          </a>
+                        ) : (
+                          <Link
+                            key={dropdownItem.path}
+                            href={dropdownItem.path}
+                            onClick={handleLinkClick}
+                            className="block px-4 py-2 text-sm text-neutral-400 hover:text-neutral-100 hover:bg-neutral-800"
+                          >
+                            {dropdownItem.name}
+                          </Link>
+                        )
+                      )}
                     </div>
                   )}
                 </div>
