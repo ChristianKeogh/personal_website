@@ -100,7 +100,7 @@ export default async function Blog(props: metadataInput) {
         </p>
       </div>
       <article className="prose">
-        <CustomMDX source={post.content} />
+        <CustomMDX source={post.content} options={{ blockJS: false }} />
       </article>
     </section>
   );

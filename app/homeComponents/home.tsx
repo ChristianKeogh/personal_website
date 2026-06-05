@@ -11,10 +11,10 @@ export default function HomeAbout() {
         className="flex flex-row items-start space-x-8"
       >
         <Image
-          src="/images/home/IMG_4172.JPG"
+          src="/images/home/self.jpeg"
           alt="Mineself"
-          width={300}
-          height={500}
+          width={250}
+          height={250}
           className="rounded-md"
           priority
         />
