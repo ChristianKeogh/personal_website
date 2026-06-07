@@ -23,10 +23,19 @@ const navItems: Record<string, NavItem> = {
   "/other": {
     name: "projects / other",
     dropdownItemsOther: [
-      { name: "USCongress", path: "https://uscongress-swart.vercel.app/" },
-      { name: "Hacker News", path: "https://hacker-news-tawny-one.vercel.app/" },
+      {
+        name: "US Congress Directory",
+        path: "https://uscongress-swart.vercel.app/"
+      },
+      {
+        name: "Hacker News Remake",
+        path: "https://hacker-news-tawny-one.vercel.app/"
+      },
       { name: "CycleHub", path: "https://github.com/ChristianKeogh/CycleHub" },
-      { name: "First Website", path: "https://first-website-black-five.vercel.app/" },
+      {
+        name: "First Website",
+        path: "https://first-website-black-five.vercel.app/"
+      },
       { name: "Nasa image of the day", path: "/apod" },
       { name: "US Debt", path: "/us-debt" },
       { name: "Snake", path: "/snake" }
