@@ -54,9 +54,9 @@ export function Navbar() {
   };
 
   return (
-    <aside className="z-[9999] sticky top-0 bg-black/80 backdrop-blur-md mb-16 tracking-tight">
+    <aside className="z-10 sticky top-0 bg-black/80 backdrop-blur-md mb-16 tracking-tight">
       <nav
-        className="flex justify-center items-center relative px-0 pb-0 fade z-[9999]"
+        className="flex justify-center items-center relative px-0 pb-0 fade"
         id="nav"
       >
         <div className="flex flex-wrap justify-center space-x-6">
@@ -75,7 +75,7 @@ export function Navbar() {
                     {item.name}
                   </button>
                   {isDropdownOpenOther && item.dropdownItemsOther && (
-                    <div className="absolute left-0 top-full bg-black shadow-xl z-[9998] min-w-32">
+                    <div className="absolute left-0 top-full bg-black shadow-xl z-20 min-w-32">
                       {item.dropdownItemsOther.map((dropdownItem) =>
                         dropdownItem.path.startsWith("http") ? (
                           <a
