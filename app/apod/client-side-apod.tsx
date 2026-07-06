@@ -3,6 +3,16 @@ export const dynamic = "force-dynamic";
 import { motion } from "framer-motion";
 import { APODType } from "./page";
 
+function formatApodDate(date?: string) {
+  if (!date) return date;
+  const [year, month, day] = date.split("-").map(Number);
+  if (!year || !month || !day) return date;
+  const monthName = new Date(year, month - 1, day).toLocaleString("en-US", {
+    month: "long",
+  });
+  return `${monthName} ${day}, ${year}`;
+}
+
 export default function ClientSideApod({ apod }: { apod: APODType }) {
   return (
     <motion.section
@@ -24,7 +34,9 @@ export default function ClientSideApod({ apod }: { apod: APODType }) {
             <h1 className="text-3xl font-bold tracking-tight mb-2">
               {apod.title}
             </h1>
-            <p className="text-neutral-400 text-sm font-mono">{apod.date}</p>
+            <p className="text-neutral-400 text-sm font-mono">
+              {formatApodDate(apod.date)}
+            </p>
           </header>
 
           <div className="rounded-xl overflow-hidden shadow-2xl border border-neutral-800 bg-neutral-900">
