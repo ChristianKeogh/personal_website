@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import Image from "next/image";
 
 export default function Credentials() {
@@ -23,11 +20,7 @@ export default function Credentials() {
   ];
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="w-full flex justify-center"
-    >
+    <div className="w-full flex justify-center">
       <div className="grid grid-cols-3 gap-8">
         {links.map((item, i) => (
           <a
@@ -47,6 +40,6 @@ export default function Credentials() {
           </a>
         ))}
       </div>
-    </motion.div>
+    </div>
   );
 }

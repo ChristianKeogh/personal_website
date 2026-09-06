@@ -1,37 +1,8 @@
 import { MDXRemote, MDXRemoteProps } from "next-mdx-remote/rsc";
 import Image from "next/image";
 import Link from "next/link";
-import React, { ReactNode } from "react";
+import React, { CSSProperties, ReactNode } from "react";
 import { highlight } from "sugar-high";
-
-interface TableProps {
-  data: {
-    headers: string[];
-    rows: string[][];
-  };
-}
-
-function Table({ data }: TableProps) {
-  let headers = data.headers.map((header, index) => (
-    <th key={index}>{header}</th>
-  ));
-  let rows = data.rows.map((row, index) => (
-    <tr key={index}>
-      {row.map((cell, cellIndex) => (
-        <td key={cellIndex}>{cell}</td>
-      ))}
-    </tr>
-  ));
-
-  return (
-    <table>
-      <thead>
-        <tr>{headers}</tr>
-      </thead>
-      <tbody>{rows}</tbody>
-    </table>
-  );
-}
 
 interface CustomLinkProps
   extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
@@ -56,6 +27,46 @@ interface RoundedImageProps extends React.ComponentProps<typeof Image> {
 
 function RoundedImage({ alt, ...props }: RoundedImageProps) {
   return <Image alt={alt} className="rounded-lg" {...props} />;
+}
+
+type MDXImgProps = {
+  src?: string;
+  alt?: string;
+  title?: string;
+  width?: string | number;
+  height?: string | number;
+  style?: CSSProperties;
+  className?: string;
+};
+
+function MDXImg({ src, alt = "", title, width, height, style, className }: MDXImgProps) {
+  if (!src) return null;
+
+  const numericWidth =
+    typeof width === "number"
+      ? width
+      : typeof width === "string" && /^\d+$/.test(width)
+        ? Number(width)
+        : 800;
+  const numericHeight =
+    typeof height === "number"
+      ? height
+      : typeof height === "string" && /^\d+$/.test(height)
+        ? Number(height)
+        : 500;
+
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      title={title}
+      width={numericWidth}
+      height={numericHeight}
+      sizes="(max-width: 768px) 100vw, 700px"
+      className={className ?? "rounded-lg h-auto w-full"}
+      style={style}
+    />
+  );
 }
 
 interface CodeProps extends React.HTMLAttributes<HTMLElement> {
@@ -104,9 +115,9 @@ const components = {
   h5: createHeading(5),
   h6: createHeading(6),
   Image: RoundedImage,
+  img: MDXImg,
   a: CustomLink,
-  code: Code,
-  Table
+  code: Code
 };
 
 interface CustomMDXProps extends MDXRemoteProps {

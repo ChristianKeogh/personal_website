@@ -85,7 +85,7 @@ export default async function Blog(props: metadataInput) {
               : `/og?title=${encodeURIComponent(post.metadata.title)}`,
             url: `${baseUrl}/blog/${post.slug}`,
             author: {
-              "@type": "Christian",
+              "@type": "Person",
               name: "Christian Keogh"
             }
           })

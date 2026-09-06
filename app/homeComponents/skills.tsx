@@ -1,5 +1,3 @@
-"use client";
-import { motion } from "framer-motion";
 import Image from "next/image";
 
 export default function Skills() {
@@ -13,11 +11,7 @@ export default function Skills() {
   ];
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="w-full flex justify-center"
-    >
+    <div className="w-full flex justify-center">
       <div className="grid grid-cols-3 gap-8">
         {iconPaths.map((src, i) => (
           <div
@@ -29,12 +23,11 @@ export default function Skills() {
               alt={`Skill icon ${i + 1}`}
               fill
               sizes="96px"
-              priority
               style={{ objectFit: "contain" }}
             />
           </div>
         ))}
       </div>
-    </motion.div>
+    </div>
   );
 }

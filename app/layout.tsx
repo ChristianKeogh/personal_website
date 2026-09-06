@@ -45,7 +45,9 @@ export default function RootLayout({
       lang="en"
       className={`text-white bg-black ${GeistSans.variable} ${GeistMono.variable}`}
     >
-      <body className="antialiased max-w-xl mx-4 mt-8 md:mx-auto min-h-screen flex flex-col">
+      <body
+        className={`${GeistSans.className} antialiased max-w-xl mx-4 mt-8 md:mx-auto min-h-screen flex flex-col`}
+      >
         <main className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0 grow pb-32">
           <Navbar />
           {children}
