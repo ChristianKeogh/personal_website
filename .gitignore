@@ -40,4 +40,5 @@ yarn-error.log*
 next-env.d.ts
 
 # local planning notes
-/docs/
+/docs/*
+!/docs/education-basic-economics.md
