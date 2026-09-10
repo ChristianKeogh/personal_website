@@ -1,6 +1,5 @@
 import Link from "next/link";
 import type { Lesson } from "../lessons";
-import { RememberLesson } from "./last-lesson";
 import LessonHook from "./lesson-hook";
 import PrevNext from "./prev-next";
 
@@ -12,7 +11,6 @@ interface LessonShellProps {
 export default function LessonShell({ lesson, children }: LessonShellProps) {
   return (
     <article>
-      <RememberLesson slug={lesson.slug} />
       <Link
         href="/education/economics"
         className="text-sm text-neutral-500 hover:text-neutral-300 transition-colors"

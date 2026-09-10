@@ -1,6 +1,7 @@
 import { baseUrl } from "app/sitemap";
 import type { ComponentType } from "react";
 import { notFound } from "next/navigation";
+import EconomyToy from "../components/economy-toy";
 import ExternalityToy from "../components/externality-toy";
 import IncentivesToy from "../components/incentives-toy";
 import LessonShell from "../components/lesson-shell";
@@ -17,6 +18,7 @@ interface LessonPageProps {
 export const dynamicParams = false;
 
 const interactives: Record<string, ComponentType> = {
+  "an-economy": EconomyToy,
   "scarcity-trade-offs": ScarcityToy,
   "supply-demand": SupplyDemandToy,
   "equilibrium-shocks": ShockButtons,

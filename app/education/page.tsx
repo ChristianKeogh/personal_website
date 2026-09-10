@@ -3,8 +3,7 @@ import Link from "next/link";
 import { lessons } from "./economics/lessons";
 
 const title = "Education";
-const description =
-  "Short, visual refresher pages for ideas worth re-learning.";
+const description = "Forget these lessons at your own peril";
 
 export const metadata = {
   title,
@@ -24,7 +23,7 @@ export default function EducationPage() {
         Education
       </h1>
       <p className="mt-2 mb-8 text-neutral-400">
-        One idea per page. One thing to play with. Three things to remember.
+        Forget these lessons at your own peril
       </p>
       <Link
         href="/education/economics"
@@ -34,8 +33,8 @@ export default function EducationPage() {
           Basic economics
         </span>
         <span className="text-neutral-400 text-sm mt-1">
-          {lessons.length} lessons — scarcity, prices, incentives and the
-          headline numbers.
+          {lessons.length} lessons — what an economy is, then scarcity, prices,
+          incentives.
         </span>
       </Link>
     </section>

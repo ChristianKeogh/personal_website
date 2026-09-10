@@ -1,11 +1,10 @@
 import { baseUrl } from "app/sitemap";
 import Link from "next/link";
-import ContinueLink from "./components/continue-link";
 import { lessons } from "./lessons";
 
 const title = "Basic economics";
 const description =
-  "Six short, visual refreshers: scarcity, supply and demand, shocks, incentives, market failure and the headline numbers.";
+  "What an economy is, then scarcity, prices, shocks, incentives, market failure and the headline numbers.";
 
 export const metadata = {
   title,
@@ -31,9 +30,8 @@ export default function EconomicsPage() {
         Basic economics
       </h1>
       <p className="mt-2 text-neutral-400">
-        Six ideas. Read in order, or open the one you need.
+        Start with what an economy is. Then the rest, in order or not.
       </p>
-      <ContinueLink />
       <ol className="mt-8 flex flex-col gap-3">
         {lessons.map((lesson, index) => (
           <li key={lesson.slug}>

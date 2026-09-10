@@ -8,6 +8,17 @@ export interface Lesson {
 
 export const lessons: Lesson[] = [
   {
+    slug: "an-economy",
+    title: "An economy is",
+    blurb: "People making, trading and using things — including you.",
+    idea: "An economy is people making, trading and using things. Not a building. The same loop that fills a shop also sets your rent, your wage, and whether the bus still runs.",
+    takeaways: [
+      "An economy is a pattern of making, trading and using.",
+      "You are already in it: job, shopping, rent.",
+      "When the loop snags, prices and work move for everyone."
+    ]
+  },
+  {
     slug: "scarcity-trade-offs",
     title: "Scarcity & trade-offs",
     blurb: "Why every choice quietly costs you something else.",

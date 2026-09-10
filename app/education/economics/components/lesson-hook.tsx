@@ -74,6 +74,17 @@ function Ticker({ to, unit }: { to: number; unit: string }) {
 
 function Scene({ slug, still }: { slug: string; still: boolean }) {
   switch (slug) {
+    case "an-economy":
+      return (
+        <Frame>
+          <Stroke
+            d="M40 40 C40 12, 200 12, 200 40 C200 68, 40 68, 40 40"
+            color={colors.mark}
+            still={still}
+          />
+        </Frame>
+      );
+
     case "scarcity-trade-offs":
       return (
         <Frame>
