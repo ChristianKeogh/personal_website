@@ -20,6 +20,9 @@ const navItems: Record<string, NavItem> = {
   "/blog": {
     name: "blog"
   },
+  "/education": {
+    name: "education"
+  },
   "/other": {
     name: "projects / other",
     dropdownItemsOther: [

@@ -1,4 +1,5 @@
 import { getBlogPosts } from "app/blog/utils";
+import { lessons } from "app/education/economics/lessons";
 
 export const baseUrl = "https://christiankeogh.com";
 
@@ -8,12 +9,20 @@ export default async function sitemap() {
     lastModified: post.metadata.publishedAt
   }));
 
-  let routes = ["", "/blog", "/art", "/apod", "/snake", "/us-debt"].map(
-    (route) => ({
-      url: `${baseUrl}${route}`,
-      lastModified: new Date().toISOString().split("T")[0]
-    })
-  );
+  let routes = [
+    "",
+    "/blog",
+    "/art",
+    "/apod",
+    "/snake",
+    "/us-debt",
+    "/education",
+    "/education/economics",
+    ...lessons.map((lesson) => `/education/economics/${lesson.slug}`)
+  ].map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date().toISOString().split("T")[0]
+  }));
 
   return [...routes, ...blogs];
 }
