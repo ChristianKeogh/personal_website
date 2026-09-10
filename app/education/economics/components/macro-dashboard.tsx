@@ -105,6 +105,8 @@ export default function MacroDashboard() {
               type="number"
               domain={[FIRST, LAST]}
               ticks={series.map((item) => item.year)}
+              interval="equidistantPreserveStart"
+              minTickGap={12}
               stroke={colors.axis}
               tick={axisStyle}
             >
