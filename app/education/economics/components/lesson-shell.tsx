@@ -18,14 +18,6 @@ export default function LessonShell({ lesson, children }: LessonShellProps) {
       </h2>
       <p className="mt-2 text-neutral-300">{lesson.idea}</p>
       {children}
-      <h3 className="mt-10 text-sm uppercase tracking-widest text-neutral-500">
-        Takeaway
-      </h3>
-      <ul className="mt-3 flex flex-col gap-2 list-disc pl-5 text-neutral-300">
-        {lesson.takeaways.map((takeaway) => (
-          <li key={takeaway}>{takeaway}</li>
-        ))}
-      </ul>
     </section>
   );
 }
