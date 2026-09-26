@@ -22,7 +22,7 @@ export default function EducationPage() {
         Education
       </h1>
       <p className="mt-2 mb-8 text-neutral-400">
-        Forget these lessons at your own peril
+        Lessons I think are important or just fun
       </p>
       <Link
         href="/education/economics"

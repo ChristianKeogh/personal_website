@@ -47,9 +47,6 @@ export default function EconomicsPage() {
       >
         ← Education
       </Link>
-      <h1 className="title font-semibold text-2xl tracking-tighter mt-4">
-        Basic economics
-      </h1>
       {lessons.map((lesson) => {
         const Interactive = interactives[lesson.slug];
 
