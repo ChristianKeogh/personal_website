@@ -1,6 +1,5 @@
 import { baseUrl } from "app/sitemap";
 import Link from "next/link";
-import { lessons } from "./economics/lessons";
 
 const title = "Education";
 const description = "Forget these lessons at your own peril";
@@ -33,8 +32,8 @@ export default function EducationPage() {
           Basic economics
         </span>
         <span className="text-neutral-400 text-sm mt-1">
-          {lessons.length} lessons — what an economy is, then scarcity, prices,
-          incentives.
+          Learn these truths to understand why society can't be controlled, only
+          influenced
         </span>
       </Link>
     </section>

@@ -1,10 +1,30 @@
 import { baseUrl } from "app/sitemap";
 import Link from "next/link";
+import type { ComponentType } from "react";
+import EconomyToy from "./components/economy-toy";
+import ExternalityToy from "./components/externality-toy";
+import HashScroll from "./components/hash-scroll";
+import IncentivesToy from "./components/incentives-toy";
+import LessonShell from "./components/lesson-shell";
+import MacroDashboard from "./components/macro-dashboard";
+import ScarcityToy from "./components/scarcity-toy";
+import ShockButtons from "./components/shock-buttons";
+import SupplyDemandToy from "./components/supply-demand-toy";
 import { lessons } from "./lessons";
 
 const title = "Basic economics";
 const description =
   "What an economy is, then scarcity, prices, shocks, incentives, market failure and the headline numbers.";
+
+const interactives: Record<string, ComponentType> = {
+  "an-economy": EconomyToy,
+  "scarcity-trade-offs": ScarcityToy,
+  "supply-demand": SupplyDemandToy,
+  "equilibrium-shocks": ShockButtons,
+  incentives: IncentivesToy,
+  "markets-failure": ExternalityToy,
+  "gdp-inflation-unemployment": MacroDashboard
+};
 
 export const metadata = {
   title,
@@ -19,7 +39,8 @@ export const metadata = {
 
 export default function EconomicsPage() {
   return (
-    <section>
+    <article>
+      <HashScroll />
       <Link
         href="/education"
         className="text-sm text-neutral-500 hover:text-neutral-300 transition-colors"
@@ -29,31 +50,15 @@ export default function EconomicsPage() {
       <h1 className="title font-semibold text-2xl tracking-tighter mt-4">
         Basic economics
       </h1>
-      <p className="mt-2 text-neutral-400">
-        Start with what an economy is. Then the rest, in order or not.
-      </p>
-      <ol className="mt-8 flex flex-col gap-3">
-        {lessons.map((lesson, index) => (
-          <li key={lesson.slug}>
-            <Link
-              href={`/education/economics/${lesson.slug}`}
-              className="group flex gap-4 border border-neutral-800 rounded-lg p-4 hover:border-neutral-600 transition-colors"
-            >
-              <span className="text-neutral-600 tabular-nums text-sm pt-0.5">
-                {index + 1}
-              </span>
-              <span className="flex flex-col">
-                <span className="text-neutral-100 font-medium tracking-tight group-hover:text-neutral-300 transition-colors">
-                  {lesson.title}
-                </span>
-                <span className="text-neutral-400 text-sm mt-1">
-                  {lesson.blurb}
-                </span>
-              </span>
-            </Link>
-          </li>
-        ))}
-      </ol>
-    </section>
+      {lessons.map((lesson) => {
+        const Interactive = interactives[lesson.slug];
+
+        return (
+          <LessonShell key={lesson.slug} lesson={lesson}>
+            <Interactive />
+          </LessonShell>
+        );
+      })}
+    </article>
   );
 }

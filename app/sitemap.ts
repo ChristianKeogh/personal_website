@@ -1,5 +1,4 @@
 import { getBlogPosts } from "app/blog/utils";
-import { lessons } from "app/education/economics/lessons";
 
 export const baseUrl = "https://christiankeogh.com";
 
@@ -17,8 +16,7 @@ export default async function sitemap() {
     "/snake",
     "/us-debt",
     "/education",
-    "/education/economics",
-    ...lessons.map((lesson) => `/education/economics/${lesson.slug}`)
+    "/education/economics"
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date().toISOString().split("T")[0]

@@ -89,12 +89,3 @@ export const lessons: Lesson[] = [
 export function getLesson(slug: string) {
   return lessons.find((lesson) => lesson.slug === slug);
 }
-
-export function getNeighbours(slug: string) {
-  const index = lessons.findIndex((lesson) => lesson.slug === slug);
-
-  return {
-    previous: index > 0 ? lessons[index - 1] : undefined,
-    next: index < lessons.length - 1 ? lessons[index + 1] : undefined
-  };
-}
