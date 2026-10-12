@@ -40,8 +40,8 @@ const navItems: Record<string, NavItem> = {
         path: "https://first-website-black-five.vercel.app/"
       },
       { name: "Nasa image of the day", path: "/apod" },
-      { name: "US Debt", path: "/us-debt" },
-      { name: "Snake", path: "/snake" }
+      { name: "US Debt", path: "/us-debt" }
+      // { name: "Snake", path: "/snake" }
     ]
   },
   "/art": {
