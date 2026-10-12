@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { APODType } from "./page";
+import type { APODType } from "./page";
 
 function formatApodDate(date?: string) {
   if (!date) return date;
@@ -20,7 +20,8 @@ export default function ClientSideApod({ apod }: { apod: APODType }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
-      {apod.title === "Error" ? (
+      {/* "Error" is the title the server sends when the picture did not load. */}
+      {apod.title === "Error" || !apod.url ? (
         <div className="text-center space-y-4">
           <p className="text-red-400">Failed to load content.</p>
           <p className="text-sm text-neutral-500">
