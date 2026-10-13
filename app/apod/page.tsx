@@ -1,23 +1,16 @@
-import { unstable_cache } from "next/cache";
 import { unstable_rethrow } from "next/navigation";
-import {
-  APOD_LOAD_ERROR,
-  parseApodPayload,
-  type APODType,
-} from "./apod-payload";
+import { parseApodPayload, type APODType } from "./apod-payload";
 import ClientSideApod from "./client-side-apod";
 
 export type { APODType };
 
-// The route itself is not cached. Successful payloads are cached below and
-// reused when a later refresh fails.
+// Do not store the route. Fetch uses cache: "no-store" so a timeout, 500, or
+// placeholder body is never kept, and yesterday's picture is not shown when
+// today's request fails.
 export const revalidate = 0;
 
-// First attempt is 10s; the retry uses a longer timeout. Both need to finish
-// inside the function limit.
 export const maxDuration = 60;
 
-const SUCCESS_REVALIDATE_SECONDS = 60 * 60 * 24;
 const FIRST_ATTEMPT_MS = 10_000;
 const RETRY_ATTEMPT_MS = 20_000;
 
@@ -36,6 +29,15 @@ function errorText(error: unknown): string {
   return "Unknown error";
 }
 
+function apodEndpoint(apiKey: string): string {
+  const endpoint = new URL(
+    "https://science.nasa.gov/wp-json/wp/v2/apod-basic"
+  );
+  endpoint.searchParams.set("api_key", apiKey);
+  endpoint.searchParams.set("per_page", "1");
+  return endpoint.toString();
+}
+
 async function requestApod(timeoutMs: number): Promise<APODType> {
   const key = process.env.APOD_KEY;
   if (!key) {
@@ -44,13 +46,10 @@ async function requestApod(timeoutMs: number): Promise<APODType> {
 
   let response: Response;
   try {
-    response = await fetch(
-      `https://api.nasa.gov/planetary/apod?api_key=${key}`,
-      {
-        cache: "no-store",
-        signal: AbortSignal.timeout(timeoutMs),
-      }
-    );
+    response = await fetch(apodEndpoint(key), {
+      cache: "no-store",
+      signal: AbortSignal.timeout(timeoutMs),
+    });
   } catch (error) {
     throw new Error(errorText(error));
   }
@@ -92,21 +91,14 @@ async function fetchApod(): Promise<APODType> {
   }
 }
 
-// Throws on failure, so a placeholder or error body is never written here.
-// Bump the key when the success check changes so a bad cached payload is
-// not reused. While this entry is fresh, NASA is not called. Once it is
-// stale, a failed refresh keeps the previous picture.
-const getCachedApod = unstable_cache(fetchApod, ["nasa-apod", "v2"], {
-  revalidate: SUCCESS_REVALIDATE_SECONDS,
-});
-
 export default async function ApodPage() {
   try {
-    const apod = await getCachedApod();
+    const apod = await fetchApod();
     return <ClientSideApod apod={apod} />;
   } catch (error) {
     unstable_rethrow(error);
-    console.error(`Failed to load APOD: ${errorText(error)}`);
-    return <ClientSideApod apod={{ title: APOD_LOAD_ERROR }} />;
+    const message = errorText(error);
+    console.error(`Failed to load APOD: ${message}`);
+    return <ClientSideApod error={message} />;
   }
 }

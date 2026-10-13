@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import type { APODType } from "./page";
+import type { APODType } from "./apod-payload";
 
 function formatApodDate(date?: string) {
   if (!date) return date;
@@ -12,7 +12,31 @@ function formatApodDate(date?: string) {
   return `${monthName} ${day}, ${year}`;
 }
 
-export default function ClientSideApod({ apod }: { apod: APODType }) {
+export default function ClientSideApod({
+  apod,
+  error,
+}: {
+  apod?: APODType;
+  error?: string;
+}) {
+  if (error || !apod?.url) {
+    return (
+      <motion.section
+        className="flex flex-col items-center justify-center max-w-2xl mx-auto py-8"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="text-center space-y-4">
+          <p className="text-red-400">Error loading image</p>
+          <p className="text-sm text-neutral-500 break-words">
+            {error || "Failed to load content."}
+          </p>
+        </div>
+      </motion.section>
+    );
+  }
+
   return (
     <motion.section
       className="flex flex-col items-center justify-center max-w-2xl mx-auto py-8"
@@ -20,53 +44,43 @@ export default function ClientSideApod({ apod }: { apod: APODType }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
-      {/* "Error" is the title the server sends when the picture did not load. */}
-      {apod.title === "Error" || !apod.url ? (
-        <div className="text-center space-y-4">
-          <p className="text-red-400">Failed to load content.</p>
-          <p className="text-sm text-neutral-500">
-            Please try again later.
+      <article className="w-full text-center space-y-6">
+        <header>
+          <h1 className="text-3xl font-bold tracking-tight mb-2">
+            {apod.title}
+          </h1>
+          <p className="text-neutral-400 text-sm font-mono">
+            {formatApodDate(apod.date)}
+          </p>
+        </header>
+
+        <div className="rounded-xl overflow-hidden shadow-2xl border border-neutral-800 bg-neutral-900">
+          {apod.media_type === "image" ? (
+            <img
+              src={apod.url}
+              alt={apod.title}
+              className="w-full h-auto object-cover"
+              loading="lazy"
+            />
+          ) : (
+            <div className="aspect-video w-full">
+              <iframe
+                src={apod.url}
+                title={apod.title}
+                className="w-full h-full"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+              />
+            </div>
+          )}
+        </div>
+
+        <div className="text-left prose prose-neutral prose-invert max-w-none">
+          <p className="text-neutral-300 leading-relaxed">
+            {apod.explanation}
           </p>
         </div>
-      ) : (
-        <article className="w-full text-center space-y-6">
-          <header>
-            <h1 className="text-3xl font-bold tracking-tight mb-2">
-              {apod.title}
-            </h1>
-            <p className="text-neutral-400 text-sm font-mono">
-              {formatApodDate(apod.date)}
-            </p>
-          </header>
-
-          <div className="rounded-xl overflow-hidden shadow-2xl border border-neutral-800 bg-neutral-900">
-            {apod.media_type === "image" ? (
-              <img
-                src={apod.url}
-                alt={apod.title}
-                className="w-full h-auto object-cover"
-                loading="lazy"
-              />
-            ) : (
-              <div className="aspect-video w-full">
-                <iframe
-                  src={apod.url}
-                  title={apod.title}
-                  className="w-full h-full"
-                  allow="autoplay; encrypted-media"
-                  allowFullScreen
-                />
-              </div>
-            )}
-          </div>
-
-          <div className="text-left prose prose-neutral prose-invert max-w-none">
-            <p className="text-neutral-300 leading-relaxed">
-              {apod.explanation}
-            </p>
-          </div>
-        </article>
-      )}
+      </article>
     </motion.section>
   );
 }

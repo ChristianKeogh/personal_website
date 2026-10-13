@@ -1,5 +1,3 @@
-export const APOD_LOAD_ERROR = "Error";
-
 export interface APODType {
   date?: string;
   explanation?: string;
@@ -15,11 +13,14 @@ const GENERIC_TITLES = new Set([
   "nasa",
   "nasa science",
   "apod",
+  "apod - nasa science",
   "astronomy picture of the day",
 ]);
 
 const PLACEHOLDER_URL_PATTERN =
   /nasa[-_]?logo|nasa[-_]?meatball|\/themes\/nasa-child\//i;
+
+const IMAGE_PATH_PATTERN = /\.(jpe?g|png|gif|webp|avif)(\?|$)/i;
 
 function calendarDate(timeZone: string, at: Date): string {
   return new Intl.DateTimeFormat("en-CA", {
@@ -56,11 +57,96 @@ function isHttpUrl(value: string): URL | null {
   }
 }
 
+export function stripHtml(value: string): string {
+  return value
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/^Explanation:\s*/i, "")
+    .trim();
+}
+
+export function unwrapApodResponse(value: unknown): unknown {
+  if (Array.isArray(value)) {
+    if (value.length === 0) {
+      throw new Error("NASA APOD response was an empty list");
+    }
+    return value[0];
+  }
+  return value;
+}
+
 function isPlaceholderAsset(url: string): boolean {
   return PLACEHOLDER_URL_PATTERN.test(url);
 }
 
-export function apodPayloadFailure(value: unknown, now = new Date()): string | null {
+function looksLikeImageUrl(url: string): boolean {
+  const parsed = isHttpUrl(url);
+  if (!parsed) return false;
+  if (parsed.pathname.includes("/image-article/")) return false;
+  return (
+    IMAGE_PATH_PATTERN.test(parsed.pathname) ||
+    parsed.hostname.includes("assets.science.nasa.gov") ||
+    parsed.hostname.includes("apod.nasa.gov")
+  );
+}
+
+function looksLikeVideoUrl(url: string): boolean {
+  const parsed = isHttpUrl(url);
+  if (!parsed) return false;
+  const host = parsed.hostname.replace(/^www\./, "");
+  return (
+    host === "youtube.com" ||
+    host === "youtu.be" ||
+    host === "youtube-nocookie.com" ||
+    parsed.pathname.includes("/embed/")
+  );
+}
+
+export function normalizeApodRecord(value: unknown): Record<string, unknown> {
+  if (!value || typeof value !== "object") {
+    throw new Error("NASA APOD response was not an object");
+  }
+
+  const record = value as Record<string, unknown>;
+  const mediaType =
+    typeof record.media_type === "string" ? record.media_type.trim() : "";
+  const hdurl = typeof record.hdurl === "string" ? record.hdurl.trim() : "";
+  const rawUrl = typeof record.url === "string" ? record.url.trim() : "";
+  const explanation =
+    typeof record.explanation === "string"
+      ? stripHtml(record.explanation)
+      : "";
+  const title =
+    typeof record.title === "string" ? record.title.trim() : "";
+
+  // On the WordPress API, `url` is the article permalink. The picture is hdurl.
+  let url = rawUrl;
+  if (mediaType === "image") {
+    url = hdurl || rawUrl;
+  } else if (mediaType === "video" || mediaType === "iframe") {
+    url = looksLikeVideoUrl(rawUrl) ? rawUrl : hdurl || rawUrl;
+  }
+
+  return {
+    ...record,
+    title,
+    explanation,
+    media_type: mediaType === "iframe" ? "video" : mediaType,
+    hdurl: hdurl || undefined,
+    url,
+  };
+}
+
+export function apodPayloadFailure(
+  value: unknown,
+  now = new Date()
+): string | null {
   if (!value || typeof value !== "object") {
     return "response was not an object";
   }
@@ -82,13 +168,19 @@ export function apodPayloadFailure(value: unknown, now = new Date()): string | n
 
   const url = typeof record.url === "string" ? record.url.trim() : "";
   if (!url) {
-    return "missing url";
+    return "missing image url";
   }
   if (!isHttpUrl(url)) {
     return "url was not an http(s) address";
   }
   if (isPlaceholderAsset(url)) {
     return "url is a NASA placeholder/logo asset";
+  }
+  if (mediaType === "image" && !looksLikeImageUrl(url)) {
+    return "url is not an image asset (article permalink is not the picture)";
+  }
+  if (mediaType === "video" && !looksLikeVideoUrl(url)) {
+    return "url is not a video embed";
   }
 
   if (typeof record.hdurl === "string" && record.hdurl.trim()) {
@@ -119,12 +211,12 @@ export function apodPayloadFailure(value: unknown, now = new Date()): string | n
 }
 
 export function parseApodPayload(value: unknown, now = new Date()): APODType {
-  const failure = apodPayloadFailure(value, now);
+  const record = normalizeApodRecord(unwrapApodResponse(value));
+  const failure = apodPayloadFailure(record, now);
   if (failure) {
     throw new Error(`NASA APOD response was not a real picture (${failure})`);
   }
 
-  const record = value as Record<string, unknown>;
   return {
     date: record.date as string,
     explanation: record.explanation as string,
