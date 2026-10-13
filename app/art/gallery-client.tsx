@@ -16,11 +16,13 @@ export interface ArtItem {
   folder: string;
 }
 
-interface GalleryClientProps {
+export default function GalleryClient({
+  initialItems,
+  error,
+}: {
   initialItems: ArtItem[];
-}
-
-export default function GalleryClient({ initialItems }: GalleryClientProps) {
+  error?: string;
+}) {
   const [activeCategory, setActiveCategory] = useState<Category | "All">(
     "Production"
   );
@@ -98,6 +100,10 @@ export default function GalleryClient({ initialItems }: GalleryClientProps) {
           personal explorations
         </p>
 
+        {error && (
+          <p className="text-red-400 mb-8 break-words">{error}</p>
+        )}
+
         <div className="flex gap-4 border-b border-neutral-800 pb-2">
           {["All", "Production", "Personal"].map((cat) => (
             <button
@@ -147,7 +153,7 @@ export default function GalleryClient({ initialItems }: GalleryClientProps) {
         ))}
       </div>
 
-      {filteredItems.length === 0 && (
+      {!error && filteredItems.length === 0 && (
         <p className="text-neutral-500 text-center py-20">
           No items found in this category.
         </p>
