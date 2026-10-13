@@ -12,6 +12,22 @@ const CATEGORY = {
   "professional-animation": "Production",
 } as const;
 
+function parseKey(key: string) {
+  const parts = key.split("/");
+  const root = parts[0];
+  const category = CATEGORY[root as keyof typeof CATEGORY];
+  if (!category || parts.some((part) => !part)) {
+    throw new Error(`Invalid gallery key: ${key}`);
+  }
+  if (root === "personal" && parts.length === 2) {
+    return { category, folder: "", file: parts[1] };
+  }
+  if (parts.length === 3) {
+    return { category, folder: parts[1], file: parts[2] };
+  }
+  throw new Error(`Invalid gallery key: ${key}`);
+}
+
 async function getImages(): Promise<ArtItem[]> {
   const res = await fetch(MANIFEST_URL, { next: { revalidate: 60 } });
   if (!res.ok) {
@@ -23,21 +39,20 @@ async function getImages(): Promise<ArtItem[]> {
     throw new Error("Gallery manifest must be a JSON array");
   }
 
-  return data.map((entry: { key: string; description: string }) => {
-    const [root, folder, file] = entry.key.split("/");
-    const category = CATEGORY[root as keyof typeof CATEGORY];
-    if (!category || !folder || !file) {
-      throw new Error(`Invalid gallery key: ${entry.key}`);
+  return data.map(
+    (entry: { key: string; description?: string; title?: string }) => {
+      const { category, folder, file } = parseKey(entry.key);
+      const description = entry.description ?? "";
+      return {
+        id: entry.key,
+        title: entry.title || description || file,
+        category,
+        url: `${IMAGE_HOST}/${entry.key}`,
+        description,
+        folder,
+      };
     }
-    return {
-      id: entry.key,
-      title: entry.description || file,
-      category,
-      url: `${IMAGE_HOST}/${entry.key}`,
-      description: entry.description,
-      folder,
-    };
-  });
+  );
 }
 
 export default async function ArtPage() {

@@ -16,6 +16,21 @@ export interface ArtItem {
   folder: string;
 }
 
+function ItemCaption({ item }: { item: ArtItem }) {
+  const showDescription =
+    item.description !== "" && item.description !== item.title;
+  return (
+    <div className="flex flex-col">
+      <h3 className="font-semibold text-xs text-neutral-100 uppercase tracking-wider">
+        {item.title}
+      </h3>
+      {showDescription ? (
+        <p className="text-sm text-neutral-500">{item.description}</p>
+      ) : null}
+    </div>
+  );
+}
+
 export default function GalleryClient({
   initialItems,
   error,
@@ -35,6 +50,26 @@ export default function GalleryClient({
   const filteredItems = initialItems.filter((item) =>
     activeCategory === "All" ? true : item.category === activeCategory
   );
+
+  const groups: { folder: string; items: ArtItem[] }[] = [];
+  const ungrouped: ArtItem[] = [];
+  const byFolder = new Map<string, ArtItem[]>();
+  for (const item of filteredItems) {
+    if (!item.folder) {
+      ungrouped.push(item);
+      continue;
+    }
+    let bucket = byFolder.get(item.folder);
+    if (!bucket) {
+      bucket = [];
+      byFolder.set(item.folder, bucket);
+      groups.push({ folder: item.folder, items: bucket });
+    }
+    bucket.push(item);
+  }
+  if (ungrouped.length) {
+    groups.unshift({ folder: "", items: ungrouped });
+  }
 
   const handleNext = useCallback(() => {
     if (selectedIndex === null) return;
@@ -127,29 +162,37 @@ export default function GalleryClient({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {filteredItems.map((item, index) => (
-          <div
-            key={item.id}
-            onClick={() => setSelectedIndex(index)}
-            className="group relative flex flex-col space-y-3 cursor-zoom-in"
-          >
-            <div className="relative aspect-[3/2] overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900 transition-colors group-hover:border-neutral-700">
-              <Image
-                src={item.url}
-                alt={item.title}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
+      <div className="space-y-10">
+        {groups.map((group) => (
+          <section key={group.folder || "ungrouped"}>
+            {group.folder ? (
+              <h2 className="font-semibold text-xs text-neutral-100 uppercase tracking-wider mb-4">
+                {group.folder}
+              </h2>
+            ) : null}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {group.items.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() =>
+                    setSelectedIndex(filteredItems.indexOf(item))
+                  }
+                  className="group relative flex flex-col space-y-3 cursor-zoom-in"
+                >
+                  <div className="relative aspect-[3/2] overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900 transition-colors group-hover:border-neutral-700">
+                    <Image
+                      src={item.url}
+                      alt={item.title}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
+                  <ItemCaption item={item} />
+                </div>
+              ))}
             </div>
-            <div className="flex flex-col">
-              <h3 className="font-semibold text-xs text-neutral-100 uppercase tracking-wider">
-                {item.folder}
-              </h3>
-              <p className="text-sm text-neutral-500">{item.description}</p>
-            </div>
-          </div>
+          </section>
         ))}
       </div>
 
@@ -232,6 +275,7 @@ export default function GalleryClient({
                     className="text-center bg-black/50 px-6 py-4 rounded-xl backdrop-blur-sm pointer-events-none absolute bottom-4"
                     onClick={(e) => e.stopPropagation()}
                   >
+                    <ItemCaption item={filteredItems[selectedIndex]} />
                     <p className="text-neutral-600 text-sm mt-1 font-mono">
                       {selectedIndex + 1} / {filteredItems.length}
                     </p>

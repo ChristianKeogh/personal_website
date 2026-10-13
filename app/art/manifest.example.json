@@ -87,5 +87,23 @@
       "background",
       "skool"
     ]
+  },
+  {
+    "key": "personal/two_knights.jpg",
+    "title": "Elden Bling",
+    "description": "",
+    "tags": []
+  },
+  {
+    "key": "personal/image0.jpeg",
+    "title": "John",
+    "description": "Friend portrait",
+    "tags": []
+  },
+  {
+    "key": "personal/traditional/14408371_1374319609263194_495625821_o.jpg",
+    "title": "White pencil",
+    "description": "Life Drawing session",
+    "tags": []
   }
 ]
