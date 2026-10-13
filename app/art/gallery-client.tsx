@@ -1,9 +1,17 @@
 "use client";
 
-import { AnimatePresence, motion, useMotionValue } from "framer-motion";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { motion } from "framer-motion";
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useMemo, useState } from "react";
+import Lightbox from "yet-another-react-lightbox";
+import Captions from "yet-another-react-lightbox/plugins/captions";
+import Counter from "yet-another-react-lightbox/plugins/counter";
+import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import "yet-another-react-lightbox/styles.css";
+import "yet-another-react-lightbox/plugins/captions.css";
+import "yet-another-react-lightbox/plugins/counter.css";
+import "yet-another-react-lightbox/plugins/thumbnails.css";
 
 export type Category = "Production" | "Personal";
 
@@ -41,14 +49,14 @@ export default function GalleryClient({
   const [activeCategory, setActiveCategory] = useState<Category | "All">(
     "Production"
   );
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [scale, setScale] = useState(1);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [index, setIndex] = useState(-1);
 
-  const filteredItems = initialItems.filter((item) =>
-    activeCategory === "All" ? true : item.category === activeCategory
+  const filteredItems = useMemo(
+    () =>
+      initialItems.filter((item) =>
+        activeCategory === "All" ? true : item.category === activeCategory
+      ),
+    [initialItems, activeCategory]
   );
 
   const groups: { folder: string; items: ArtItem[] }[] = [];
@@ -71,61 +79,19 @@ export default function GalleryClient({
     groups.unshift({ folder: "", items: ungrouped });
   }
 
-  const handleNext = useCallback(() => {
-    if (selectedIndex === null) return;
-    setSelectedIndex((prev) => (prev! + 1) % filteredItems.length);
-    setScale(1);
-    x.set(0);
-    y.set(0);
-  }, [selectedIndex, filteredItems.length, x, y]);
-
-  const handlePrev = useCallback(() => {
-    if (selectedIndex === null) return;
-    setSelectedIndex(
-      (prev) => (prev! - 1 + filteredItems.length) % filteredItems.length
-    );
-    setScale(1);
-    x.set(0);
-    y.set(0);
-  }, [selectedIndex, filteredItems.length, x, y]);
-
-  const handleClose = useCallback(() => {
-    setSelectedIndex(null);
-    setScale(1);
-    x.set(0);
-    y.set(0);
-  }, [x, y]);
-
-  const handleWheel = useCallback(
-    (e: React.WheelEvent) => {
-      if (selectedIndex === null) return;
-      // Zoom sensitivity
-      const zoomStep = 0.1;
-      const newScale = e.deltaY < 0 ? scale + zoomStep : scale - zoomStep;
-      // Constrain scale between 1 and 5
-      const clampedScale = Math.min(Math.max(newScale, 1), 5);
-      setScale(clampedScale);
-
-      // Reset position if zooming all the way out
-      if (clampedScale === 1) {
-        x.set(0);
-        y.set(0);
-      }
-    },
-    [scale, selectedIndex, x, y]
+  const slides = useMemo(
+    () =>
+      filteredItems.map((item) => ({
+        src: item.url,
+        alt: item.title,
+        title: item.title,
+        description:
+          item.description !== "" && item.description !== item.title
+            ? item.description
+            : undefined,
+      })),
+    [filteredItems]
   );
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (selectedIndex === null) return;
-      if (e.key === "ArrowRight") handleNext();
-      if (e.key === "ArrowLeft") handlePrev();
-      if (e.key === "Escape") handleClose();
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [selectedIndex, handleNext, handlePrev, handleClose]);
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
@@ -145,7 +111,7 @@ export default function GalleryClient({
               key={cat}
               onClick={() => {
                 setActiveCategory(cat as Category | "All");
-                setSelectedIndex(null);
+                setIndex(-1);
               }}
               className={`pb-2 px-1 text-sm font-medium transition-colors relative ${
                 activeCategory === cat
@@ -170,22 +136,22 @@ export default function GalleryClient({
                 {group.folder}
               </h2>
             ) : null}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="columns-1 md:columns-2 gap-6">
               {group.items.map((item) => (
                 <div
                   key={item.id}
-                  onClick={() =>
-                    setSelectedIndex(filteredItems.indexOf(item))
-                  }
-                  className="group relative flex flex-col space-y-3 cursor-zoom-in"
+                  onClick={() => setIndex(filteredItems.indexOf(item))}
+                  className="group mb-6 break-inside-avoid flex flex-col space-y-3 cursor-zoom-in"
                 >
-                  <div className="relative aspect-[3/2] overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900 transition-colors group-hover:border-neutral-700">
+                  <div className="overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900 transition-colors group-hover:border-neutral-700">
                     <Image
                       src={item.url}
                       alt={item.title}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      width={1200}
+                      height={800}
                       sizes="(max-width: 768px) 100vw, 50vw"
+                      className="w-full"
+                      style={{ width: "100%", height: "auto" }}
                     />
                   </div>
                   <ItemCaption item={item} />
@@ -202,96 +168,15 @@ export default function GalleryClient({
         </p>
       )}
 
-      {/* Lightbox Overlay */}
-      <AnimatePresence mode="wait">
-        {selectedIndex !== null && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[10000] bg-black/95 flex flex-col items-center justify-center p-4 md:p-8"
-            onClick={handleClose}
-            onWheel={handleWheel}
-          >
-            <button
-              className="fixed top-6 right-6 text-neutral-400 hover:text-white p-2 z-[10002] transition-transform hover:scale-110 active:scale-95 bg-black/50 rounded-full"
-              onClick={handleClose}
-            >
-              <X size={32} />
-            </button>
-
-            <div
-              ref={containerRef}
-              className="relative w-full h-full flex items-center justify-center overflow-hidden"
-            >
-              {filteredItems.length > 1 && scale === 1 && (
-                <>
-                  <button
-                    className="fixed left-4 md:left-8 text-neutral-400 hover:text-white p-4 z-[10001] transition-colors bg-black/20 rounded-full hover:bg-black/50"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handlePrev();
-                    }}
-                  >
-                    <ChevronLeft size={48} />
-                  </button>
-                  <button
-                    className="fixed right-4 md:right-8 text-neutral-400 hover:text-white p-4 z-[10001] transition-colors bg-black/20 rounded-full hover:bg-black/50"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleNext();
-                    }}
-                  >
-                    <ChevronRight size={48} />
-                  </button>
-                </>
-              )}
-
-              <motion.div
-                className={`relative w-full h-full max-w-5xl max-h-[85vh] flex flex-col items-center gap-4 ${
-                  scale > 1
-                    ? "cursor-grab active:cursor-grabbing"
-                    : "cursor-default"
-                }`}
-                style={{ x, y, scale }}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                drag={scale > 1}
-                dragConstraints={containerRef}
-                dragElastic={0.1}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <div className="relative w-full h-full">
-                  <Image
-                    src={filteredItems[selectedIndex].url}
-                    alt={filteredItems[selectedIndex].title}
-                    fill
-                    className="object-contain pointer-events-none"
-                    priority
-                    sizes="100vw"
-                  />
-                </div>
-                {scale === 1 && (
-                  <div
-                    className="text-center bg-black/50 px-6 py-4 rounded-xl backdrop-blur-sm pointer-events-none absolute bottom-4"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <ItemCaption item={filteredItems[selectedIndex]} />
-                    <p className="text-neutral-600 text-sm mt-1 font-mono">
-                      {selectedIndex + 1} / {filteredItems.length}
-                    </p>
-                  </div>
-                )}
-              </motion.div>
-            </div>
-
-            {scale > 1 && (
-              <div className="fixed bottom-8 left-1/2 -translate-x-1/2 bg-black/50 px-4 py-2 rounded-full backdrop-blur-sm pointer-events-none text-neutral-400 text-sm font-mono z-[10001]">
-                Zoom: {Math.round(scale * 100)}% (Scroll to adjust, Drag to pan)
-              </div>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <Lightbox
+        open={index >= 0}
+        close={() => setIndex(-1)}
+        index={index}
+        slides={slides}
+        plugins={[Zoom, Captions, Thumbnails, Counter]}
+        controller={{ closeOnBackdropClick: true }}
+        counter={{ style: { top: "2.75rem" } }}
+      />
     </motion.div>
   );
 }
