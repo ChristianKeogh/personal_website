@@ -1,52 +1,91 @@
 [
   {
+    "key": "professional-animation/TLS/TLS_BG_SC0530_V02-for-website.jpg",
+    "description": "Main Table",
+    "tags": [
+      "background",
+      "pub"
+    ]
+  },
+  {
+    "key": "professional-animation/TLS/TLS_BG_SC0830_FL.png",
+    "description": "Road Crash",
+    "tags": [
+      "background",
+      "road"
+    ]
+  },
+  {
+    "key": "professional-animation/TLS/TLS_BG_SH0310_FL.png",
+    "description": "Pub Wide 2",
+    "tags": [
+      "background",
+      "pub"
+    ]
+  },
+  {
     "key": "professional-animation/TLS/TLS_BG_SH0320_V03.jpg",
-    "description": "",
-    "tags": ["bg"]
+    "description": "Opposite Closeup",
+    "tags": [
+      "pub",
+      "background"
+    ]
   },
   {
-    "key": "professional-animation/TLS/<tls-file-2>",
-    "description": ""
+    "key": "professional-animation/TLS/TLS_BG_SH0410_FL.png",
+    "description": "Pub Wide",
+    "tags": [
+      "background",
+      "pub"
+    ]
   },
   {
-    "key": "professional-animation/TLS/<tls-file-3>",
-    "description": ""
-  },
-  {
-    "key": "professional-animation/TLS/<tls-file-4>",
-    "description": ""
-  },
-  {
-    "key": "professional-animation/TLS/<tls-file-5>",
-    "description": ""
-  },
-  {
-    "key": "professional-animation/TLS/<tls-file-6>",
-    "description": ""
-  },
-  {
-    "key": "professional-animation/vikingskool/FmMWx0XXkAEFDF-.jpeg",
-    "description": ""
-  },
-  {
-    "key": "professional-animation/vikingskool/FlZru6zXwAIxPe6.jpeg",
-    "description": ""
+    "key": "professional-animation/TLS/TLS_BG_SH0630_FL.png",
+    "description": "Main Table Top",
+    "tags": [
+      "background",
+      "pub"
+    ]
   },
   {
     "key": "professional-animation/vikingskool/FlZru61X0AIF-Ou.jpeg",
-    "description": ""
+    "description": "Courtyard Bleachers",
+    "tags": [
+      "background",
+      "courtyard"
+    ]
   },
   {
     "key": "professional-animation/vikingskool/FlZru6zXoAA41lM.jpeg",
-    "description": ""
+    "description": "Skool",
+    "tags": [
+      "background",
+      "skool"
+    ]
+  },
+  {
+    "key": "professional-animation/vikingskool/FlZru6zXwAIxPe6.jpeg",
+    "description": "Skool Tent",
+    "tags": [
+      "background",
+      "skool",
+      "tent"
+    ]
   },
   {
     "key": "professional-animation/vikingskool/FlurrZwWYBgdpCi.jpeg",
-    "description": ""
+    "description": "Viking Ship Turnaround",
+    "tags": [
+      "prop",
+      "turnaround"
+    ]
   },
   {
-    "key": "personal/<subfolder>/<file>",
-    "description": "",
-    "tags": ["personal"]
+    "key": "professional-animation/vikingskool/FmMWx0XXkAEFDF-.jpeg",
+    "description": "Shield behind Skool",
+    "tags": [
+      "background",
+      "skool"
+    ]
   }
 ]

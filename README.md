@@ -23,4 +23,4 @@ Category and heading come from the path, not from extra fields:
 - first folder `professional-animation` → **Production**
 - second folder → group heading (`TLS`, `vikingskool`, …)
 
-See [app/art/manifest.example.json](app/art/manifest.example.json). Descriptions are empty there because the live captions live in S3. Replace the `<tls-file-N>` placeholders with the remaining keys under `professional-animation/TLS/`.
+See [app/art/manifest.example.json](app/art/manifest.example.json) for a copy of the live manifest.
