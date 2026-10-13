@@ -1,10 +1,16 @@
 import { unstable_cache } from "next/cache";
 import { unstable_rethrow } from "next/navigation";
+import {
+  APOD_LOAD_ERROR,
+  parseApodPayload,
+  type APODType,
+} from "./apod-payload";
 import ClientSideApod from "./client-side-apod";
 
-// The route itself is not cached. A failed render used to be stored for a day
-// via `revalidate = 86400`. Successful payloads are cached below and reused
-// when a later refresh fails.
+export type { APODType };
+
+// The route itself is not cached. Successful payloads are cached below and
+// reused when a later refresh fails.
 export const revalidate = 0;
 
 // First attempt is 10s; the retry uses a longer timeout. Both need to finish
@@ -14,18 +20,6 @@ export const maxDuration = 60;
 const SUCCESS_REVALIDATE_SECONDS = 60 * 60 * 24;
 const FIRST_ATTEMPT_MS = 10_000;
 const RETRY_ATTEMPT_MS = 20_000;
-
-const APOD_LOAD_ERROR = "Error";
-
-export interface APODType {
-  date?: string;
-  explanation?: string;
-  hdurl?: string;
-  media_type?: string;
-  service_version?: string;
-  title: string;
-  url?: string;
-}
 
 function redact(value: string): string {
   const key = process.env.APOD_KEY;
@@ -40,18 +34,6 @@ function errorText(error: unknown): string {
     return redact(`${error.name}: ${error.message}${cause}`);
   }
   return "Unknown error";
-}
-
-function isApodPayload(value: unknown): value is APODType {
-  if (!value || typeof value !== "object") return false;
-  const record = value as Record<string, unknown>;
-  return (
-    typeof record.title === "string" &&
-    record.title.length > 0 &&
-    record.title !== APOD_LOAD_ERROR &&
-    typeof record.url === "string" &&
-    record.url.length > 0
-  );
 }
 
 async function requestApod(timeoutMs: number): Promise<APODType> {
@@ -98,11 +80,7 @@ async function requestApod(timeoutMs: number): Promise<APODType> {
     throw new Error(`NASA APOD returned invalid JSON (${errorText(error)})`);
   }
 
-  if (!isApodPayload(payload)) {
-    throw new Error("NASA APOD response was missing a title or url");
-  }
-
-  return payload;
+  return parseApodPayload(payload);
 }
 
 async function fetchApod(): Promise<APODType> {
@@ -114,10 +92,11 @@ async function fetchApod(): Promise<APODType> {
   }
 }
 
-// Throws on failure, so a bad response is never written here. While this entry
-// is fresh, NASA is not called. Once it is stale, a failed refresh keeps the
-// previous picture and the next request tries again.
-const getCachedApod = unstable_cache(fetchApod, ["nasa-apod"], {
+// Throws on failure, so a placeholder or error body is never written here.
+// Bump the key when the success check changes so a bad cached payload is
+// not reused. While this entry is fresh, NASA is not called. Once it is
+// stale, a failed refresh keeps the previous picture.
+const getCachedApod = unstable_cache(fetchApod, ["nasa-apod", "v2"], {
   revalidate: SUCCESS_REVALIDATE_SECONDS,
 });
 
