@@ -5,19 +5,24 @@ import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import type { ArtItem, Category } from "./types";
+export type Category = "Production" | "Personal";
 
-export type { ArtItem, Category };
-
-interface GalleryClientProps {
-  initialItems: ArtItem[];
-  error?: string;
+export interface ArtItem {
+  id: string;
+  title: string;
+  category: Category;
+  url: string;
+  description: string;
+  folder: string;
 }
 
 export default function GalleryClient({
   initialItems,
   error,
-}: GalleryClientProps) {
+}: {
+  initialItems: ArtItem[];
+  error?: string;
+}) {
   const [activeCategory, setActiveCategory] = useState<Category | "All">(
     "Production"
   );
@@ -95,72 +100,63 @@ export default function GalleryClient({
           personal explorations
         </p>
 
-        {error ? (
-          <div className="space-y-2">
-            <p className="text-red-400">Couldn't load the gallery</p>
-            <p className="text-sm text-neutral-500 break-words font-mono">
-              {error}
-            </p>
-          </div>
-        ) : (
-          <div className="flex gap-4 border-b border-neutral-800 pb-2">
-            {["All", "Production", "Personal"].map((cat) => (
-              <button
-                key={cat}
-                onClick={() => {
-                  setActiveCategory(cat as Category | "All");
-                  setSelectedIndex(null);
-                }}
-                className={`pb-2 px-1 text-sm font-medium transition-colors relative ${
-                  activeCategory === cat
-                    ? "text-white"
-                    : "text-neutral-500 hover:text-neutral-300"
-                }`}
-              >
-                {cat}
-                {activeCategory === cat && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white" />
-                )}
-              </button>
-            ))}
-          </div>
+        {error && (
+          <p className="text-red-400 mb-8 break-words">{error}</p>
         )}
+
+        <div className="flex gap-4 border-b border-neutral-800 pb-2">
+          {["All", "Production", "Personal"].map((cat) => (
+            <button
+              key={cat}
+              onClick={() => {
+                setActiveCategory(cat as Category | "All");
+                setSelectedIndex(null);
+              }}
+              className={`pb-2 px-1 text-sm font-medium transition-colors relative ${
+                activeCategory === cat
+                  ? "text-white"
+                  : "text-neutral-500 hover:text-neutral-300"
+              }`}
+            >
+              {cat}
+              {activeCategory === cat && (
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white" />
+              )}
+            </button>
+          ))}
+        </div>
       </div>
 
-      {!error && (
-        <>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {filteredItems.map((item, index) => (
-              <div
-                key={item.id}
-                onClick={() => setSelectedIndex(index)}
-                className="group relative flex flex-col space-y-3 cursor-zoom-in"
-              >
-                <div className="relative aspect-[3/2] overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900 transition-colors group-hover:border-neutral-700">
-                  <Image
-                    src={item.url}
-                    alt={item.title}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <h3 className="font-semibold text-xs text-neutral-100 uppercase tracking-wider">
-                    {item.folder}
-                  </h3>
-                  <p className="text-sm text-neutral-500">{item.description}</p>
-                </div>
-              </div>
-            ))}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {filteredItems.map((item, index) => (
+          <div
+            key={item.id}
+            onClick={() => setSelectedIndex(index)}
+            className="group relative flex flex-col space-y-3 cursor-zoom-in"
+          >
+            <div className="relative aspect-[3/2] overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900 transition-colors group-hover:border-neutral-700">
+              <Image
+                src={item.url}
+                alt={item.title}
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </div>
+            <div className="flex flex-col">
+              <h3 className="font-semibold text-xs text-neutral-100 uppercase tracking-wider">
+                {item.folder}
+              </h3>
+              <p className="text-sm text-neutral-500">{item.description}</p>
+            </div>
           </div>
+        ))}
+      </div>
 
-          {filteredItems.length === 0 && (
-            <p className="text-neutral-500 text-center py-20">
-              No items found in this category.
-            </p>
-          )}
-        </>
+      {!error && filteredItems.length === 0 && (
+        <p className="text-neutral-500 text-center py-20">
+          No items found in this category.
+        </p>
       )}
 
       {/* Lightbox Overlay */}
