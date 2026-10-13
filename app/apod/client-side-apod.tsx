@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import type { APODType } from "./apod-payload";
+import type { APODType } from "./page";
 
 function formatApodDate(date?: string) {
   if (!date) return date;
