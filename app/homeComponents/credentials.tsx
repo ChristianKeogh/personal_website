@@ -20,22 +20,22 @@ export default function Credentials() {
   ];
 
   return (
-    <div className="w-full flex justify-center">
-      <div className="grid grid-cols-3 gap-8">
+    <div className="w-full max-w-full flex justify-center px-1">
+      <div className="grid grid-cols-3 gap-3 md:gap-8 w-full justify-items-center">
         {links.map((item, i) => (
           <a
             key={i}
             href={item.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-36 h-60 bg-neutral-1000 rounded-md flex flex-col items-center justify-center text-lg font-semibold hover:bg-neutral-900 transition-colors"
+            className="w-full max-w-[5.75rem] min-h-11 h-40 md:max-w-none md:w-36 md:h-60 bg-neutral-1000 rounded-md flex flex-col items-center justify-center text-lg font-semibold hover:bg-neutral-900 transition-colors"
           >
             <Image
               src={item.img}
               alt={`${item.label} icon`}
               width={60}
               height={60}
-              className="mt-4"
+              className="mt-4 h-10 w-10 md:h-[60px] md:w-[60px]"
             />
           </a>
         ))}

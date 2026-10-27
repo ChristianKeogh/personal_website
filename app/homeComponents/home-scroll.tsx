@@ -50,8 +50,11 @@ export default function HomeScroll({ sections }: { sections: Section[] }) {
   }, []);
 
   return (
-    <div className="relative">
-      <div className="fixed top-1/2 left-4 -translate-y-1/2 z-10 space-y-4">
+    <div className="relative w-full max-w-full overflow-x-hidden">
+      <nav
+        aria-label="Page sections"
+        className="hidden md:block fixed top-1/2 left-4 -translate-y-1/2 z-10 space-y-4"
+      >
         {sections.map((section) => (
           <a
             key={section.key}
@@ -74,7 +77,7 @@ export default function HomeScroll({ sections }: { sections: Section[] }) {
             </span>
           </a>
         ))}
-      </div>
+      </nav>
 
       <section>
         {sections.map((section, index) => (
@@ -91,7 +94,7 @@ export default function HomeScroll({ sections }: { sections: Section[] }) {
               initial="hidden"
               whileInView="visible"
               viewport={{ amount: 0.5 }}
-              className="flex items-center justify-center min-h-[70vh]"
+              className="flex items-center justify-center py-16 min-h-[min(32rem,calc(100svh-12rem))] md:py-0 md:min-h-[70vh]"
             >
               {section.children}
             </motion.div>
